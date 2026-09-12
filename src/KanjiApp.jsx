@@ -2419,6 +2419,7 @@ function useSRS() {
   return { data, loaded, error, grade, reload: load, reset };
 }
 
+
 // ---------- Stroke-order helpers (shared by DetailView-style previews & Writing mode) ----------
 function strokeLength(points) {
   let len = 0;
@@ -2588,8 +2589,8 @@ function LibraryView({ t, dark, setDark, query, setQuery, filtered, favorites, o
             <Sparkles size={16} color="#fff" />
           </div>
           <div style={{ textAlign: "left" }}>
-            <div style={{ fontWeight: 700, fontSize: 14 }}>漢字クイズ Quiz</div>
-            <div style={{ fontSize: 11, opacity: 0.7 }}>Reading ↔ vocabulary, 4-choice</div>
+            <div style={{ fontWeight: 700, fontSize: 14 }}>語彙クイズ Vocab Quiz</div>
+            <div style={{ fontSize: 11, opacity: 0.7 }}>4-choice, meanings shown after each pick</div>
           </div>
         </button>
         <button onClick={onStartWrite} style={{
@@ -3008,12 +3009,12 @@ function buildQuizQuestion(pool) {
     const distractorPool = flatVocab.filter((v) => v.r !== entry.r && v.w !== entry.w);
     const distractors = shuffleArr(distractorPool).slice(0, 3);
     const options = shuffleArr([entry, ...distractors]);
-    return { type, promptReading: entry.r, correctKey: `${entry.kanjiId}-${entry.w}`, options };
+    return { type, promptReading: entry.r, correctKey: `${entry.kanjiId}-${entry.w}`, options, correctMeaning: vocabMeaningsLine(entry) };
   } else {
     const distractorPool = usable.filter((k) => k.id !== correctKanji.id && !entry.w.includes(k.char));
     const distractors = shuffleArr(distractorPool).slice(0, 3);
     const options = shuffleArr([correctKanji, ...distractors]);
-    return { type, promptReading: entry.r, correctWord: entry.w, correctKey: String(correctKanji.id), options };
+    return { type, promptReading: entry.r, correctWord: entry.w, correctKey: String(correctKanji.id), options, correctMeaning: vocabMeaningsLine(entry) };
   }
 }
 
@@ -3155,6 +3156,7 @@ function QuizMode({ t, dark, setDark, deckSource, onExit }) {
           {picked && question.type === "vocabToKanji" && (
             <div style={{ textAlign: "center", fontSize: 13, color: t.inkSoft, marginTop: 14 }}>
               言葉：<span style={{ fontWeight: 700, color: t.ink }}>{question.correctWord}</span>（{question.promptReading}）
+              <div style={{ marginTop: 4 }}>{question.correctMeaning}</div>
             </div>
           )}
 
