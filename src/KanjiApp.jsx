@@ -3406,15 +3406,18 @@ function SRSMode({ t, dark, setDark, deckSource, srs, onExit }) {
     setPos(0); setRevealed(false); setTally({ again: 0, hard: 0, good: 0, easy: 0 });
   }, [srs.loaded]); // build the queue once data has loaded; grading doesn't reshuffle mid-session
 
+  // These must run on every render, in the same order, even while queue is
+  // still null — otherwise React sees a different number of hooks between
+  // the "loading" render and the real render and throws (error #310).
+  const finished = queue !== null && pos >= queue.length;
+  const kanji = queue !== null && !finished ? queue[pos] : null;
+  const exampleSentences = useMemo(() => (kanji ? buildExampleSentences(kanji) : []), [kanji]);
+
   if (!srs.loaded || queue === null) {
     return (
       <div style={{ maxWidth: 520, margin: "0 auto", padding: "80px 20px", textAlign: "center", color: t.inkSoft }}>Loading your review deck…</div>
     );
   }
-
-  const finished = pos >= queue.length;
-  const kanji = !finished ? queue[pos] : null;
-  const exampleSentences = useMemo(() => (kanji ? buildExampleSentences(kanji) : []), [kanji]);
 
   const grade = async (g) => {
     await srs.grade(kanji.id, g);
