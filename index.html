@@ -6314,8 +6314,8 @@ const KanjiApp = /* @__PURE__ */ (function() {
     });
     return { levels, setLevel };
   }
-  function LevelDots({ level, onSet, t, labels = false }) {
-    return rce("div", { onClick: (e) => e.stopPropagation(), style: { display: "flex", justifyContent: "center", gap: labels ? 10 : 7, marginTop: labels ? 0 : 9 } }, LEVELS.map((L) => {
+  function LevelDots({ level, onSet, t, labels = false, inline = false }) {
+    return rce("div", { onClick: (e) => e.stopPropagation(), style: { display: "flex", justifyContent: "center", gap: labels ? 10 : inline ? 6 : 7, marginTop: labels || inline ? 0 : 9 } }, LEVELS.map((L) => {
       const on = level === L.v;
       return rce("button", {
         key: L.v,
@@ -6326,11 +6326,11 @@ const KanjiApp = /* @__PURE__ */ (function() {
           e.stopPropagation();
           onSet(L.v);
         },
-        style: labels ? { flex: 1, padding: "11px 8px", borderRadius: 12, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", color: on ? "#fff" : t.ink, fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" } : { width: 22, height: 22, borderRadius: 999, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", cursor: "pointer", padding: 0 }
+        style: labels ? { flex: 1, padding: "11px 8px", borderRadius: 12, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", color: on ? "#fff" : t.ink, fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" } : { width: inline ? 20 : 22, height: inline ? 20 : 22, borderRadius: 999, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", cursor: "pointer", padding: 0 }
       }, labels ? L.label : null);
     }));
   }
-  function LevelToolbar({ t, counts, total, levelFilter, setLevelFilter, sortMode, setSortMode }) {
+  function LevelToolbar({ t, counts, total, levelFilter, setLevelFilter, sortMode, setSortMode, viewMode, setViewMode }) {
     const chips = [
       { k: "all", label: "All", count: total, color: t.ink },
       { k: 1, label: "Not known", count: counts[1], color: LEVELS[0].color },
@@ -6357,7 +6357,7 @@ const KanjiApp = /* @__PURE__ */ (function() {
         { style: { display: "flex", alignItems: "center", gap: 8, marginTop: 12, fontSize: 13, color: t.inkSoft } },
         "Sort by",
         rce("select", { value: sortMode, onChange: (e) => setSortMode(e.target.value), style: { background: t.bg, color: t.ink, border: `1px solid ${t.border}`, borderRadius: 10, padding: "7px 10px", fontSize: 13, fontFamily: "inherit" } }, rce("option", { value: "book" }, "Book order (1, 2, 3\u2026)"), rce("option", { value: "unknown" }, "Not known first"), rce("option", { value: "known" }, "Known first")),
-        rce("span", { style: { marginLeft: "auto", fontSize: 12 } }, "Tap a dot on a card to mark it")
+        rce("div", { style: { marginLeft: "auto", display: "flex", border: `1px solid ${t.border}`, borderRadius: 10, overflow: "hidden" } }, [["list", "\u2630 List"], ["grid", "\u25A6 Grid"]].map(([k, lab]) => rce("button", { key: k, onClick: () => setViewMode(k), "aria-pressed": viewMode === k, style: { padding: "7px 11px", border: "none", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", background: viewMode === k ? t.ink : "transparent", color: viewMode === k ? t.bg : t.inkSoft } }, lab)))
       )
     );
   }
@@ -6371,6 +6371,20 @@ const KanjiApp = /* @__PURE__ */ (function() {
     const srs = useSRS();
     const { levels, setLevel } = useLevels();
     const [levelFilter, setLevelFilter] = useState("all");
+    const [viewMode, setViewModeState] = useState(() => {
+      try {
+        return localStorage.getItem("kanji-view-v1") || "list";
+      } catch (e) {
+        return "list";
+      }
+    });
+    const setViewMode = (m) => {
+      setViewModeState(m);
+      try {
+        localStorage.setItem("kanji-view-v1", m);
+      } catch (e) {
+      }
+    };
     const [sortMode, setSortMode] = useState("book");
     const counts = useMemo(() => {
       const c = { 0: 0, 1: 0, 2: 0, 3: 0 };
@@ -6404,13 +6418,14 @@ const KanjiApp = /* @__PURE__ */ (function() {
       return list;
     }, [searched, levels, levelFilter, sortMode]);
     const toggleFav = (id) => setFavorites((f) => f.includes(id) ? f.filter((x) => x !== id) : [...f, id]);
-    return /* @__PURE__ */ React.createElement("div", { style: { background: t.bg, color: t.ink, minHeight: "100vh", fontFamily: "'Zen Kaku Gothic New','Noto Sans JP',sans-serif", transition: "background .3s,color .3s" } }, /* @__PURE__ */ React.createElement("link", { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" }), selected != null ? (() => {
+    const detailEl = selected != null ? (() => {
       let deckList = filtered.length ? filtered : KANJI;
       if (!deckList.some((k) => k.id === selected)) deckList = KANJI;
       const idx = deckList.findIndex((k) => k.id === selected);
       const hasPrev = idx > 0;
       const hasNext = idx !== -1 && idx < deckList.length - 1;
-      return /* @__PURE__ */ React.createElement(
+      const accent = levels[selected] ? LEVELS[levels[selected] - 1].color : null;
+      return /* @__PURE__ */ React.createElement("div", { onClick: () => setSelected(null), style: { position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: 14, zIndex: 50 } }, /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: { width: "100%", maxWidth: 560, maxHeight: "92vh", overflowY: "auto", background: accent ? `linear-gradient(${accent}1F, ${accent}0A), ${t.card}` : t.card, border: `3px solid ${accent || t.border}`, borderRadius: 24, boxShadow: "0 20px 60px rgba(0,0,0,.35)" } }, /* @__PURE__ */ React.createElement(
         DetailView,
         {
           t,
@@ -6427,11 +6442,12 @@ const KanjiApp = /* @__PURE__ */ (function() {
           hasNext,
           position: idx === -1 ? null : { current: idx + 1, total: deckList.length }
         }
-      );
-    })() : mode === "flashcards" ? /* @__PURE__ */ React.createElement(FlashcardMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, favorites, onToggleFav: toggleFav, onExit: () => setMode("library") }) : mode === "quiz" ? /* @__PURE__ */ React.createElement(QuizMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, onExit: () => setMode("library") }) : mode === "write" ? /* @__PURE__ */ React.createElement(WriteMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, onGrade: srs.grade, onExit: () => setMode("library") }) : mode === "srs" ? /* @__PURE__ */ React.createElement(SRSMode, { t, dark, setDark, deckSource: KANJI, srs, onExit: () => {
+      )));
+    })() : null;
+    return /* @__PURE__ */ React.createElement("div", { style: { background: t.bg, color: t.ink, minHeight: "100vh", fontFamily: "'Zen Kaku Gothic New','Noto Sans JP',sans-serif", transition: "background .3s,color .3s" } }, /* @__PURE__ */ React.createElement("link", { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" }), mode === "flashcards" ? /* @__PURE__ */ React.createElement(FlashcardMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, favorites, onToggleFav: toggleFav, onExit: () => setMode("library") }) : mode === "quiz" ? /* @__PURE__ */ React.createElement(QuizMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, onExit: () => setMode("library") }) : mode === "write" ? /* @__PURE__ */ React.createElement(WriteMode, { t, dark, setDark, deckSource: filtered.length ? filtered : KANJI, onGrade: srs.grade, onExit: () => setMode("library") }) : mode === "srs" ? /* @__PURE__ */ React.createElement(SRSMode, { t, dark, setDark, deckSource: KANJI, srs, onExit: () => {
       setMode("library");
       srs.reload();
-    } }) : /* @__PURE__ */ React.createElement(
+    } }) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
       LibraryView,
       {
         t,
@@ -6448,6 +6464,8 @@ const KanjiApp = /* @__PURE__ */ (function() {
         setLevelFilter,
         sortMode,
         setSortMode,
+        viewMode,
+        setViewMode,
         onSelect: setSelected,
         onToggleFav: toggleFav,
         onStartFlashcards: () => setMode("flashcards"),
@@ -6456,9 +6474,9 @@ const KanjiApp = /* @__PURE__ */ (function() {
         onStartSRS: () => setMode("srs"),
         srs
       }
-    ));
+    ), detailEl));
   }
-  function LibraryView({ t, dark, setDark, query, setQuery, filtered, favorites, levels, setLevel, counts, levelFilter, setLevelFilter, sortMode, setSortMode, onSelect, onToggleFav, onStartFlashcards, onStartQuiz, onStartWrite, onStartSRS, srs }) {
+  function LibraryView({ t, dark, setDark, query, setQuery, filtered, favorites, levels, setLevel, counts, levelFilter, setLevelFilter, sortMode, setSortMode, viewMode, setViewMode, onSelect, onToggleFav, onStartFlashcards, onStartQuiz, onStartWrite, onStartSRS, srs }) {
     const dueCount = useMemo(() => {
       if (!(srs == null ? void 0 : srs.loaded)) return null;
       return KANJI.filter((k) => srsIsDue(srs.data[k.id])).length;
@@ -6512,7 +6530,35 @@ const KanjiApp = /* @__PURE__ */ (function() {
         placeholder: "Search by kanji, reading, meaning \u2014 or try '7' or '7-10'\u2026",
         style: { width: "100%", boxSizing: "border-box", padding: "12px 14px 12px 40px", borderRadius: 14, border: `1px solid ${t.border}`, background: t.card, color: t.ink, fontSize: 15, outline: "none" }
       }
-    )), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 18, marginBottom: 22, fontSize: 13, color: t.inkSoft } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement(BookOpen, { size: 14 }), " ", KANJI.length, " kanji"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement(Star, { size: 14 }), " ", favorites.length, " favorited")), /* @__PURE__ */ React.createElement(LevelToolbar, { t, counts, total: KANJI.length, levelFilter, setLevelFilter, sortMode, setSortMode }), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 14 } }, filtered.map((k) => /* @__PURE__ */ React.createElement(KanjiCard, { key: k.id, k, t, level: levels[k.id] || 0, onSetLevel: (v) => setLevel(k.id, v), isFav: favorites.includes(k.id), onSelect: () => onSelect(k.id), onToggleFav: () => onToggleFav(k.id) }))), filtered.length === 0 && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", color: t.inkSoft, padding: "60px 0" } }, query ? ['No kanji match "', query, '".'] : "No kanji in this group yet."));
+    )), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 18, marginBottom: 22, fontSize: 13, color: t.inkSoft } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement(BookOpen, { size: 14 }), " ", KANJI.length, " kanji"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } }, /* @__PURE__ */ React.createElement(Star, { size: 14 }), " ", favorites.length, " favorited")), /* @__PURE__ */ React.createElement(LevelToolbar, { t, counts, total: KANJI.length, levelFilter, setLevelFilter, sortMode, setSortMode, viewMode, setViewMode }), /* @__PURE__ */ React.createElement("div", { style: viewMode === "grid" ? { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 14 } : { display: "flex", flexDirection: "column", gap: 8 } }, filtered.map((k) => /* @__PURE__ */ React.createElement(viewMode === "grid" ? KanjiCard : KanjiRow, { key: k.id, k, t, level: levels[k.id] || 0, onSetLevel: (v) => setLevel(k.id, v), isFav: favorites.includes(k.id), onSelect: () => onSelect(k.id), onToggleFav: () => onToggleFav(k.id) }))), filtered.length === 0 && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", color: t.inkSoft, padding: "60px 0" } }, query ? ['No kanji match "', query, '".'] : "No kanji in this group yet."));
+  }
+  function KanjiRow({ k, t, level, onSetLevel, isFav, onSelect, onToggleFav }) {
+    const lc = level ? LEVELS[level - 1].color : null;
+    return rce(
+      "div",
+      {
+        onClick: onSelect,
+        style: {
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          cursor: "pointer",
+          background: lc ? `linear-gradient(${lc}26, ${lc}26), ${t.card}` : t.card,
+          border: `1px solid ${lc || t.border}`,
+          borderLeft: lc ? `6px solid ${lc}` : `1px solid ${t.border}`,
+          borderRadius: 12,
+          padding: "8px 10px"
+        }
+      },
+      rce("div", { style: { fontSize: 10, fontWeight: 700, color: "#fff", background: t.ink, borderRadius: 6, minWidth: 24, height: 18, padding: "0 4px", display: "grid", placeItems: "center", flexShrink: 0 } }, k.id),
+      rce("div", { style: { fontFamily: "'Shippori Mincho',serif", fontSize: 32, fontWeight: 700, width: 42, textAlign: "center", lineHeight: 1.1, flexShrink: 0 } }, k.char),
+      rce("div", { style: { flex: 1, minWidth: 0 } }, rce("div", { style: { fontSize: 14, fontWeight: 600, textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, k.meaning), rce("div", { style: { fontSize: 12, color: t.inkSoft, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, k.kun.replace(/-/g, "") !== "\u2014" ? k.kun.replace(/-/g, "") : k.on)),
+      rce(LevelDots, { level, onSet: onSetLevel, t, inline: true }),
+      rce("button", { onClick: (e) => {
+        e.stopPropagation();
+        onToggleFav();
+      }, style: { background: "none", border: "none", cursor: "pointer", padding: 4, flexShrink: 0 }, "aria-label": "Toggle favorite" }, rce(Star, { size: 16, fill: isFav ? t.brass : "none", color: isFav ? t.brass : t.inkSoft }))
+    );
   }
   function KanjiCard({ k, t, level, onSetLevel, isFav, onSelect, onToggleFav }) {
     const [hover, setHover] = useState(false);
@@ -6548,6 +6594,14 @@ const KanjiApp = /* @__PURE__ */ (function() {
     );
   }
   function DetailView({ t, dark, kanji, isFav, level, onSetLevel, onToggleFav, onBack, onPrev, onNext, hasPrev, hasNext, position }) {
+    const ac = level ? LEVELS[level - 1].color : null;
+    useEffect(() => {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }, []);
     const [stamped, setStamped] = useState(false);
     const [showPractice, setShowPractice] = useState(true);
     useEffect(() => {
@@ -6558,11 +6612,12 @@ const KanjiApp = /* @__PURE__ */ (function() {
       const onKey = (e) => {
         if (e.key === "ArrowRight" && hasNext) onNext();
         else if (e.key === "ArrowLeft" && hasPrev) onPrev();
+        else if (e.key === "Escape") onBack();
       };
       window.addEventListener("keydown", onKey);
       return () => window.removeEventListener("keydown", onKey);
     }, [hasNext, hasPrev, onNext, onPrev]);
-    return /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: "24px 20px 70px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18, gap: 10 } }, /* @__PURE__ */ React.createElement("button", { onClick: onBack, style: { display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", color: t.inkSoft, cursor: "pointer", fontSize: 14, padding: 0 } }, /* @__PURE__ */ React.createElement(ArrowLeft, { size: 16 }), " Back to library"), position && /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: t.inkSoft } }, position.current, " / ", position.total)), /* @__PURE__ */ React.createElement("div", { style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 24, padding: "20px 24px 36px", textAlign: "center", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ React.createElement("button", { onClick: onToggleFav, style: { position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer" }, "aria-label": "Toggle favorite" }, /* @__PURE__ */ React.createElement(Star, { size: 20, fill: isFav ? t.brass : "none", color: isFav ? t.brass : t.inkSoft })), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 18, marginBottom: 4 } }, /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ React.createElement("div", { style: { padding: "16px 16px 28px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, gap: 10 } }, /* @__PURE__ */ React.createElement("button", { onClick: onBack, style: { display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", color: t.inkSoft, cursor: "pointer", fontSize: 14, padding: 0 } }, /* @__PURE__ */ React.createElement(XIcon, { size: 14 }), " Close"), position && /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: t.inkSoft } }, position.current, " / ", position.total)), /* @__PURE__ */ React.createElement("div", { style: { background: ac ? `linear-gradient(${ac}22, ${ac}22), ${t.card}` : t.card, border: `2px solid ${ac || t.border}`, borderRadius: 24, padding: "20px 16px 30px", textAlign: "center", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ React.createElement("button", { onClick: onToggleFav, style: { position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer" }, "aria-label": "Toggle favorite" }, /* @__PURE__ */ React.createElement(Star, { size: 20, fill: isFav ? t.brass : "none", color: isFav ? t.brass : t.inkSoft })), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 18, marginBottom: 4 } }, /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: onPrev,
@@ -6575,7 +6630,7 @@ const KanjiApp = /* @__PURE__ */ (function() {
       position: "absolute",
       inset: "-18px",
       borderRadius: "50%",
-      border: `2.5px solid ${t.seal}`,
+      border: `2.5px solid ${ac || t.seal}`,
       opacity: stamped ? 0.9 : 0,
       transform: stamped ? "scale(1) rotate(-6deg)" : "scale(1.4) rotate(-6deg)",
       transition: "opacity .5s ease, transform .5s cubic-bezier(.2,1.4,.4,1)"
@@ -6596,7 +6651,7 @@ const KanjiApp = /* @__PURE__ */ (function() {
         style: { width: 44, height: 44, borderRadius: 999, border: `1px solid ${t.border}`, background: t.bg, display: "grid", placeItems: "center", cursor: hasNext ? "pointer" : "default", opacity: hasNext ? 1 : 0.3, flexShrink: 0 }
       },
       /* @__PURE__ */ React.createElement(ArrowLeft, { size: 18, color: t.ink, style: { transform: "rotate(180deg)" } })
-    )), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14, fontSize: 13, letterSpacing: 1.5, color: t.seal, fontWeight: 700, textTransform: "uppercase" } }, "#", kanji.id, " \xB7 ", kanji.strokes, " strokes"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 20, fontWeight: 700, marginTop: 4, textTransform: "capitalize" } }, kanji.meaning), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 14, color: t.inkSoft, marginTop: 2 } }, kanji.romaji), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: 28, marginTop: 22, paddingTop: 18, borderTop: `1px solid ${t.border}` } }, /* @__PURE__ */ React.createElement(ReadingBlock, { label: "On'yomi", value: kanji.on, t }), /* @__PURE__ */ React.createElement(ReadingBlock, { label: "Kun'yomi", value: kanji.kun, t }))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, fontWeight: 700, letterSpacing: 1, color: t.inkSoft, marginBottom: 8, textAlign: "center" } }, "HOW WELL DO YOU KNOW THIS?"), /* @__PURE__ */ React.createElement(LevelDots, { level, onSet: onSetLevel, t, labels: true })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 22, background: t.card, border: `1px solid ${t.border}`, borderRadius: 14, padding: "12px 16px", textAlign: "center" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 15, fontWeight: 600, lineHeight: 1.6 } }, kanjiMeaningsLine(kanji))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 30 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setShowPractice((v) => !v), style: {
+    )), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14, fontSize: 13, letterSpacing: 1.5, color: ac || t.seal, fontWeight: 700, textTransform: "uppercase" } }, "#", kanji.id, " \xB7 ", kanji.strokes, " strokes"), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 20, fontWeight: 700, marginTop: 4, textTransform: "capitalize" } }, kanji.meaning), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 14, color: t.inkSoft, marginTop: 2 } }, kanji.romaji), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: 28, marginTop: 22, paddingTop: 18, borderTop: `1px solid ${t.border}` } }, /* @__PURE__ */ React.createElement(ReadingBlock, { label: "On'yomi", value: kanji.on, t }), /* @__PURE__ */ React.createElement(ReadingBlock, { label: "Kun'yomi", value: kanji.kun, t }))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, fontWeight: 700, letterSpacing: 1, color: t.inkSoft, marginBottom: 8, textAlign: "center" } }, "HOW WELL DO YOU KNOW THIS?"), /* @__PURE__ */ React.createElement(LevelDots, { level, onSet: onSetLevel, t, labels: true })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 22, background: t.card, border: `1px solid ${t.border}`, borderRadius: 14, padding: "12px 16px", textAlign: "center" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 15, fontWeight: 600, lineHeight: 1.6 } }, kanjiMeaningsLine(kanji))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 30 } }, /* @__PURE__ */ React.createElement("button", { onClick: () => setShowPractice((v) => !v), style: {
       width: "100%",
       display: "flex",
       alignItems: "center",
@@ -6606,7 +6661,7 @@ const KanjiApp = /* @__PURE__ */ (function() {
       borderRadius: 14,
       padding: "13px 16px",
       cursor: "pointer"
-    } }, /* @__PURE__ */ React.createElement(SectionLabel, { icon: /* @__PURE__ */ React.createElement(PenTool, { size: 14 }), text: "PRACTICE WRITING", t, style: { marginBottom: 0 } }), /* @__PURE__ */ React.createElement(ArrowLeft, { size: 16, color: t.inkSoft, style: { transform: showPractice ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform .2s ease" } })), showPractice && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14 } }, /* @__PURE__ */ React.createElement(TraceBoard, { kanji, t, dark, size: 360 }))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 30 } }, /* @__PURE__ */ React.createElement(SectionLabel, { icon: /* @__PURE__ */ React.createElement(Layers, { size: 14 }), text: "VOCABULARY FROM THIS KANJI", t }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } }, kanji.vocab.map((v, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 14, padding: "12px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 18, fontWeight: 600 } }, v.w, " ", /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, color: t.inkSoft, fontWeight: 400 } }, "(", v.r, ")")), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: t.inkSoft, marginTop: 2 } }, v.romaji))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 10, paddingTop: 10, borderTop: `1px dashed ${t.border}`, fontSize: 13, color: t.ink, lineHeight: 1.6 } }, vocabMeaningsLine(v)))))));
+    } }, /* @__PURE__ */ React.createElement(SectionLabel, { icon: /* @__PURE__ */ React.createElement(PenTool, { size: 14 }), text: "PRACTICE WRITING", t, style: { marginBottom: 0 } }), /* @__PURE__ */ React.createElement(ArrowLeft, { size: 16, color: t.inkSoft, style: { transform: showPractice ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform .2s ease" } })), showPractice && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14 } }, /* @__PURE__ */ React.createElement(TraceBoard, { kanji, t, dark, size: Math.min(360, window.innerWidth - 72) }))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 30 } }, /* @__PURE__ */ React.createElement(SectionLabel, { icon: /* @__PURE__ */ React.createElement(Layers, { size: 14 }), text: "VOCABULARY FROM THIS KANJI", t }), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } }, kanji.vocab.map((v, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 14, padding: "12px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 18, fontWeight: 600 } }, v.w, " ", /* @__PURE__ */ React.createElement("span", { style: { fontSize: 13, color: t.inkSoft, fontWeight: 400 } }, "(", v.r, ")")), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: t.inkSoft, marginTop: 2 } }, v.romaji))), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 10, paddingTop: 10, borderTop: `1px dashed ${t.border}`, fontSize: 13, color: t.ink, lineHeight: 1.6 } }, vocabMeaningsLine(v)))))));
   }
   function SectionLabel({ icon, text, t, style }) {
     return /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 12, color: t.inkSoft, fontSize: 13, fontWeight: 700, letterSpacing: 1, ...style } }, icon, " ", text);
@@ -7124,10 +7179,10 @@ const VocabApp = /* @__PURE__ */ (function() {
   function TopBar({ t, dark, setDark, title, onBack }) {
     return /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", gap: 12 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } }, onBack && /* @__PURE__ */ React.createElement(IconBtn, { t, onClick: onBack, title: "Back" }, /* @__PURE__ */ React.createElement(ArrowLeft, { size: 18 })), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 20 } }, title)), /* @__PURE__ */ React.createElement(IconBtn, { t, onClick: () => setDark((d) => !d), title: "Toggle theme" }, dark ? /* @__PURE__ */ React.createElement(Sun, { size: 18 }) : /* @__PURE__ */ React.createElement(Moon, { size: 18 })));
   }
-  function VocabHome({ t, dark, setDark, level, setLevel, srsN5, srsN4, goal, setGoal, onStartStudy, onBrowse, onExitToRoot }) {
+  function VocabHome({ t, dark, setDark, level, setLevel, srsN5, srsN4, wordsN5, wordsN4, goal, setGoal, onStartStudy, onBrowse, onExitToRoot }) {
     const levels = [
-      { key: "N5", label: "N5 Vocabulary", words: VOCAB_N5, srs: srsN5 },
-      { key: "N4", label: "N4 Vocabulary", words: VOCAB_N4, srs: srsN4 }
+      { key: "N5", label: "N5 Vocabulary", words: wordsN5 || VOCAB_N5, srs: srsN5 },
+      { key: "N4", label: "N4 Vocabulary", words: wordsN4 || VOCAB_N4, srs: srsN4 }
     ];
     return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", background: t.bg, color: t.ink } }, /* @__PURE__ */ React.createElement(TopBar, { t, dark, setDark, title: "\u5358\u8A9E \xB7 Vocabulary", onBack: onExitToRoot }), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: "0 20px 60px" } }, /* @__PURE__ */ React.createElement("p", { style: { color: t.inkSoft, marginTop: 0, marginBottom: 24, lineHeight: 1.6 } }, "Flashcards and spaced repetition for JLPT N5 + N4 vocabulary \u2014 separate from your Kanji progress."), levels.map((lv) => {
       let due = 0, newC = 0, learning = 0, review = 0, mastered = 0;
@@ -7249,7 +7304,153 @@ const VocabApp = /* @__PURE__ */ (function() {
       fontSize: 14
     };
   }
-  function BrowseView({ t, dark, setDark, words, srs, onExit }) {
+  const vce = React.createElement;
+  const VLEVELS = [
+    { v: 1, label: "Not known", color: "#D2453A" },
+    { v: 2, label: "Somewhat", color: "#E0A21F" },
+    { v: 3, label: "Known", color: "#3E9A5B" }
+  ];
+  const VLEVEL_KEY = "vocab-levels-v1";
+  const CUSTOM_KEY = "vocab-custom-v1";
+  function useVLevels() {
+    const [levels, setLevels] = useState(() => {
+      try {
+        const raw = localStorage.getItem(VLEVEL_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    });
+    const setLevel = (id, v) => setLevels((prev) => {
+      const next = { ...prev };
+      if (!v || prev[id] === v) delete next[id];
+      else next[id] = v;
+      try {
+        localStorage.setItem(VLEVEL_KEY, JSON.stringify(next));
+      } catch (e) {
+      }
+      return next;
+    });
+    return { levels, setLevel };
+  }
+  function VDots({ level, onSet, t, labels = false }) {
+    return vce("div", { onClick: (e) => e.stopPropagation(), style: { display: "flex", gap: labels ? 10 : 8, marginTop: labels ? 16 : 0 } }, VLEVELS.map((L) => {
+      const on = level === L.v;
+      return vce("button", {
+        key: L.v,
+        title: L.label,
+        "aria-label": L.label + (on ? " (selected)" : ""),
+        "aria-pressed": on,
+        onClick: (e) => {
+          e.stopPropagation();
+          onSet(L.v);
+        },
+        style: labels ? { flex: 1, padding: "10px 6px", borderRadius: 12, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", color: on ? "#fff" : t.ink, fontWeight: 700, fontSize: 12, cursor: "pointer", fontFamily: "inherit" } : { width: 22, height: 22, borderRadius: 999, border: `2px solid ${L.color}`, background: on ? L.color : "transparent", cursor: "pointer", padding: 0 }
+      }, labels ? L.label : null);
+    }));
+  }
+  function sameWord(a, b) {
+    return a.word === b.word && (a.furigana === b.furigana || !a.furigana || !b.furigana);
+  }
+  const KANA_ONLY = /^[\u3040-\u30FF\u30FC]+$/;
+  function toRomaji(k) {
+    const hira = k.replace(/[\u30A1-\u30F6]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 96));
+    const B = { "\u3042": "a", "\u3044": "i", "\u3046": "u", "\u3048": "e", "\u304A": "o", "\u304B": "ka", "\u304D": "ki", "\u304F": "ku", "\u3051": "ke", "\u3053": "ko", "\u3055": "sa", "\u3057": "shi", "\u3059": "su", "\u305B": "se", "\u305D": "so", "\u305F": "ta", "\u3061": "chi", "\u3064": "tsu", "\u3066": "te", "\u3068": "to", "\u306A": "na", "\u306B": "ni", "\u306C": "nu", "\u306D": "ne", "\u306E": "no", "\u306F": "ha", "\u3072": "hi", "\u3075": "fu", "\u3078": "he", "\u307B": "ho", "\u307E": "ma", "\u307F": "mi", "\u3080": "mu", "\u3081": "me", "\u3082": "mo", "\u3084": "ya", "\u3086": "yu", "\u3088": "yo", "\u3089": "ra", "\u308A": "ri", "\u308B": "ru", "\u308C": "re", "\u308D": "ro", "\u308F": "wa", "\u3092": "o", "\u3093": "n", "\u304C": "ga", "\u304E": "gi", "\u3050": "gu", "\u3052": "ge", "\u3054": "go", "\u3056": "za", "\u3058": "ji", "\u305A": "zu", "\u305C": "ze", "\u305E": "zo", "\u3060": "da", "\u3062": "ji", "\u3065": "zu", "\u3067": "de", "\u3069": "do", "\u3070": "ba", "\u3073": "bi", "\u3076": "bu", "\u3079": "be", "\u307C": "bo", "\u3071": "pa", "\u3074": "pi", "\u3077": "pu", "\u307A": "pe", "\u307D": "po" };
+    const S = { "\u3083": "ya", "\u3085": "yu", "\u3087": "yo" };
+    let out = "", dbl = false;
+    for (const ch of hira) {
+      if (ch === "\u3063") { dbl = true; continue; }
+      if (ch === "\u30FC") { const m = out.match(/[aiueo]$/); if (m) out += m[0]; continue; }
+      if (S[ch]) {
+        out = /(shi|chi|ji)$/.test(out) ? out.slice(0, -1) + S[ch].slice(1) : out.replace(/i$/, "") + S[ch];
+        continue;
+      }
+      let syl = B[ch];
+      if (!syl) { out += ch; continue; }
+      if (dbl) { syl = (syl.startsWith("ch") ? "t" : syl[0]) + syl; dbl = false; }
+      out += syl;
+    }
+    return out;
+  }
+  function parseWordLines(text, level) {
+    return text.split(/\n+/).map((l) => l.trim()).filter(Boolean).map((line, i) => {
+      const parts = line.split(/[,\uFF0C\t]/).map((x) => x.trim()).filter((x, idx) => x || idx > 0);
+      const word = parts[0];
+      let furigana = "", meaning = "";
+      if (parts[1] && KANA_ONLY.test(parts[1])) {
+        furigana = parts[1];
+        meaning = parts.slice(2).join(", ");
+      } else {
+        furigana = KANA_ONLY.test(word) ? word : "";
+        meaning = parts.slice(1).join(", ");
+      }
+      return { id: `C-${Date.now()}-${i}`, word, kanji: word, furigana, romaji: toRomaji(furigana || word), meaning: meaning || "(add meaning)", pos: "noun", category: "My Words", level, exampleJp: "", exampleFurigana: "", exampleEn: "", exampleSource: "custom" };
+    }).filter((w) => w.word);
+  }
+  function AddWordsModal({ t, level, allWords, onAdd, onClose }) {
+    const [text, setText] = useState("");
+    const [report, setReport] = useState(null);
+    const submit = () => {
+      const parsed = parseWordLines(text, level);
+      const seen = [...allWords];
+      const added = [], dupes = [];
+      parsed.forEach((w) => {
+        if (seen.some((e) => sameWord(e, w))) dupes.push(w.word);
+        else {
+          seen.push(w);
+          added.push(w);
+        }
+      });
+      if (added.length) onAdd(added);
+      setReport({ added: added.length, dupes });
+      setText("");
+    };
+    const btn = { padding: "11px 14px", borderRadius: 10, border: `1px solid ${t.border}`, background: t.bg, color: t.ink, cursor: "pointer", fontWeight: 600, fontFamily: "inherit" };
+    return vce("div", { onClick: onClose, style: { position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 60 } }, vce(
+      "div",
+      { onClick: (e) => e.stopPropagation(), style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 18, padding: 22, maxWidth: 480, width: "100%", maxHeight: "90vh", overflow: "auto" } },
+      vce("div", { style: { fontWeight: 800, fontSize: 18 } }, `Add words to ${level}`),
+      vce("div", { style: { fontSize: 13, color: t.inkSoft, marginTop: 6, lineHeight: 1.6 } }, "One word per line: ", vce("b", null, "word, reading, meaning"), ". Reading and meaning are optional. Words you already have are skipped automatically. Tip: on iPhone you can copy text out of a photo (Live Text) and paste it here."),
+      vce("textarea", { value: text, onChange: (e) => setText(e.target.value), rows: 7, placeholder: "\u5B66\u6821, \u304C\u3063\u3053\u3046, school\n\u96FB\u8A71, \u3067\u3093\u308F, telephone", style: { width: "100%", marginTop: 12, padding: 10, borderRadius: 10, border: `1px solid ${t.border}`, background: t.bg, color: t.ink, fontSize: 15, fontFamily: "inherit", boxSizing: "border-box" } }),
+      report && vce("div", { style: { marginTop: 10, fontSize: 13, padding: "10px 12px", borderRadius: 10, background: t.bg, border: `1px solid ${t.border}` } }, `Added ${report.added} new word${report.added === 1 ? "" : "s"}.`, report.dupes.length > 0 && vce("div", { style: { color: "#C8473A", marginTop: 4 } }, `Skipped ${report.dupes.length} duplicate${report.dupes.length === 1 ? "" : "s"}: ${report.dupes.join(", ")}`)),
+      vce("div", { style: { display: "flex", gap: 10, marginTop: 14 } }, vce("button", { onClick: onClose, style: { ...btn, flex: 1 } }, "Done"), vce("button", { onClick: submit, disabled: !text.trim(), style: { ...btn, flex: 1, background: t.ink, color: t.bg, opacity: text.trim() ? 1 : 0.4 } }, "Add words"))
+    ));
+  }
+  function VToolbar({ t, counts, total, filter, setFilter, sort, setSort, onAdd }) {
+    const chips = [
+      { k: "all", label: "All", count: total, color: t.ink },
+      { k: 1, label: "Not known", count: counts[1], color: VLEVELS[0].color },
+      { k: 2, label: "Somewhat", count: counts[2], color: VLEVELS[1].color },
+      { k: 3, label: "Known", count: counts[3], color: VLEVELS[2].color },
+      { k: 0, label: "Unmarked", count: counts[0], color: t.inkSoft }
+    ];
+    const seg = (n, c) => n > 0 ? vce("div", { style: { width: `${n / Math.max(total, 1) * 100}%`, background: c } }) : null;
+    return vce(
+      "div",
+      { style: { marginBottom: 14, background: t.card, border: `1px solid ${t.border}`, borderRadius: 14, padding: "12px 12px 10px" } },
+      vce("div", { style: { display: "flex", height: 8, borderRadius: 99, overflow: "hidden", background: t.border } }, seg(counts[3], VLEVELS[2].color), seg(counts[2], VLEVELS[1].color), seg(counts[1], VLEVELS[0].color)),
+      vce("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginTop: 10 } }, chips.map((c) => {
+        const on = filter === c.k;
+        return vce("button", { key: String(c.k), onClick: () => setFilter(c.k), "aria-pressed": on, style: { padding: "6px 11px", borderRadius: 999, border: `1.5px solid ${c.color}`, background: on ? c.color : "transparent", color: on ? "#fff" : t.ink, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" } }, c.label, " ", vce("span", { style: { opacity: 0.75, fontWeight: 500 } }, c.count));
+      })),
+      vce(
+        "div",
+        { style: { display: "flex", alignItems: "center", gap: 8, marginTop: 10, fontSize: 12, color: t.inkSoft, flexWrap: "wrap" } },
+        "Sort by",
+        vce("select", { value: sort, onChange: (e) => setSort(e.target.value), style: { background: t.bg, color: t.ink, border: `1px solid ${t.border}`, borderRadius: 10, padding: "6px 8px", fontSize: 12, fontFamily: "inherit" } }, vce("option", { value: "list" }, "List order"), vce("option", { value: "unknown" }, "Not known first"), vce("option", { value: "known" }, "Known first")),
+        vce("button", { onClick: onAdd, style: { marginLeft: "auto", padding: "7px 12px", borderRadius: 10, border: "none", background: t.ink, color: t.bg, fontWeight: 700, fontSize: 12, cursor: "pointer", fontFamily: "inherit" } }, "+ Add words")
+      )
+    );
+  }
+  function BrowseView({ t, dark, setDark, words, srs, onExit, knowledge, setKnowledge, allWords, level, onAddWords }) {
+    const [vFilter, setVFilter] = useState("all");
+    const [vSort, setVSort] = useState("list");
+    const [showAdd, setShowAdd] = useState(false);
+    const vCounts = useMemo(() => {
+      const c = { 0: 0, 1: 0, 2: 0, 3: 0 };
+      words.forEach((w) => { c[knowledge[w.id] || 0]++; });
+      return c;
+    }, [words, knowledge]);
     const [query, setQuery] = useState("");
     const [cat, setCat] = useState("All");
     const [openWord, setOpenWord] = useState(null);
@@ -7263,8 +7464,13 @@ const VocabApp = /* @__PURE__ */ (function() {
           (w) => w.word.includes(q) || w.furigana.includes(q) || w.romaji.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q)
         );
       }
+      if (vFilter !== "all") list = list.filter((w) => (knowledge[w.id] || 0) === vFilter);
+      if (vSort !== "list") {
+        const rank = vSort === "unknown" ? { 1: 0, 2: 1, 0: 2, 3: 3 } : { 3: 0, 2: 1, 1: 2, 0: 3 };
+        list = [...list].sort((a, b) => rank[knowledge[a.id] || 0] - rank[knowledge[b.id] || 0]);
+      }
       return list;
-    }, [words, cat, query]);
+    }, [words, cat, query, vFilter, vSort, knowledge]);
     return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", background: t.bg, color: t.ink } }, /* @__PURE__ */ React.createElement(TopBar, { t, dark, setDark, title: "Browse Vocabulary", onBack: onExit }), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 720, margin: "0 auto", padding: "0 20px 60px" } }, /* @__PURE__ */ React.createElement("div", { style: { position: "relative", marginBottom: 14 } }, /* @__PURE__ */ React.createElement(Search, { size: 16, style: { position: "absolute", left: 12, top: 12, color: t.inkSoft } }), /* @__PURE__ */ React.createElement(
       "input",
       {
@@ -7299,8 +7505,10 @@ const VocabApp = /* @__PURE__ */ (function() {
         }
       },
       c
-    ))), /* @__PURE__ */ React.createElement("div", { style: { color: t.inkSoft, fontSize: 12, marginBottom: 10 } }, filtered.length, " words"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } }, filtered.map((w) => {
+    ))), /* @__PURE__ */ React.createElement(VToolbar, { t, counts: vCounts, total: words.length, filter: vFilter, setFilter: setVFilter, sort: vSort, setSort: setVSort, onAdd: () => setShowAdd(true) }), /* @__PURE__ */ React.createElement("div", { style: { color: t.inkSoft, fontSize: 12, marginBottom: 10 } }, filtered.length, " words"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } }, filtered.map((w) => {
       const status = boxStatus(srs.data[w.id]);
+      const kl = knowledge[w.id] || 0;
+      const lc = kl ? VLEVELS[kl - 1].color : null;
       return /* @__PURE__ */ React.createElement(
         "div",
         {
@@ -7311,22 +7519,23 @@ const VocabApp = /* @__PURE__ */ (function() {
             alignItems: "center",
             justifyContent: "space-between",
             cursor: "pointer",
-            background: t.card,
-            border: `1px solid ${t.border}`,
+            background: lc ? `linear-gradient(${lc}26, ${lc}26), ${t.card}` : t.card,
+            border: `1px solid ${lc || t.border}`,
+            borderLeft: lc ? `6px solid ${lc}` : `1px solid ${t.border}`,
             borderRadius: 12,
             padding: "12px 14px"
           }
         },
         /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 700, fontSize: 20 } }, w.word), /* @__PURE__ */ React.createElement("div", { style: { color: t.inkSoft, fontSize: 12 } }, w.furigana, " \xB7 ", w.meaning)),
-        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } }, /* @__PURE__ */ React.createElement("span", { style: { width: 8, height: 8, borderRadius: 99, background: STATUS_COLOR(t)[status] } }), /* @__PURE__ */ React.createElement(ChevronRight, { size: 16, color: t.inkSoft }))
+        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } }, /* @__PURE__ */ React.createElement(VDots, { level: kl, onSet: (v) => setKnowledge(w.id, v), t }), /* @__PURE__ */ React.createElement("span", { title: "Study status", style: { width: 8, height: 8, borderRadius: 99, background: STATUS_COLOR(t)[status] } }), /* @__PURE__ */ React.createElement(ChevronRight, { size: 16, color: t.inkSoft }))
       );
-    }))), openWord && /* @__PURE__ */ React.createElement(
+    }))), showAdd && /* @__PURE__ */ React.createElement(AddWordsModal, { t, level, allWords, onAdd: onAddWords, onClose: () => setShowAdd(false) }), openWord && /* @__PURE__ */ React.createElement(
       "div",
       {
         onClick: () => setOpenWord(null),
         style: { position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 50 }
       },
-      /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 18, padding: 26, maxWidth: 420, width: "100%" } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 38, textAlign: "center" } }, openWord.word), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", color: t.inkSoft, marginTop: 6 } }, openWord.furigana, " (", openWord.romaji, ")"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontWeight: 700, fontSize: 18, marginTop: 10 } }, openWord.meaning), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontSize: 11, color: t.brass, textTransform: "uppercase", letterSpacing: 1, marginTop: 6 } }, openWord.pos.replace("_", "-"), " \xB7 ", openWord.level, " \xB7 ", openWord.category), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 16, paddingTop: 14, borderTop: `1px dashed ${t.border}` } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 16 } }, openWord.exampleJp), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: t.inkSoft, marginTop: 4 } }, openWord.exampleFurigana), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: t.inkSoft, marginTop: 4, fontStyle: "italic" } }, openWord.exampleEn)), /* @__PURE__ */ React.createElement("button", { onClick: () => setOpenWord(null), style: { marginTop: 18, width: "100%", padding: "10px", borderRadius: 10, border: `1px solid ${t.border}`, background: t.bg, color: t.ink, cursor: "pointer" } }, "Close"))
+      /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: { background: t.card, border: `1px solid ${t.border}`, borderRadius: 18, padding: 26, maxWidth: 420, width: "100%" } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 38, textAlign: "center" } }, openWord.word), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", color: t.inkSoft, marginTop: 6 } }, openWord.furigana, " (", openWord.romaji, ")"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontWeight: 700, fontSize: 18, marginTop: 10 } }, openWord.meaning), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", fontSize: 11, color: t.brass, textTransform: "uppercase", letterSpacing: 1, marginTop: 6 } }, openWord.pos.replace("_", "-"), " \xB7 ", openWord.level, " \xB7 ", openWord.category), openWord.exampleJp && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 16, paddingTop: 14, borderTop: `1px dashed ${t.border}` } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: 16 } }, openWord.exampleJp), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: t.inkSoft, marginTop: 4 } }, openWord.exampleFurigana), /* @__PURE__ */ React.createElement("div", { style: { fontSize: 13, color: t.inkSoft, marginTop: 4, fontStyle: "italic" } }, openWord.exampleEn)), /* @__PURE__ */ React.createElement(VDots, { level: knowledge[openWord.id] || 0, onSet: (v) => setKnowledge(openWord.id, v), t, labels: true }), /* @__PURE__ */ React.createElement("button", { onClick: () => setOpenWord(null), style: { marginTop: 18, width: "100%", padding: "10px", borderRadius: 10, border: `1px solid ${t.border}`, background: t.bg, color: t.ink, cursor: "pointer" } }, "Close"))
     ));
   }
   function VocabApp2({ onExitToRoot }) {
@@ -7337,6 +7546,33 @@ const VocabApp = /* @__PURE__ */ (function() {
     const t = useTheme(dark);
     const srsN5 = useVocabSRS();
     const srsN4 = useVocabSRS();
+    const { levels: knowledge, setLevel: setKnowledge } = useVLevels();
+    const [custom, setCustom] = useState(() => {
+      try {
+        return JSON.parse(localStorage.getItem(CUSTOM_KEY) || "[]");
+      } catch (e) {
+        return [];
+      }
+    });
+    const addCustom = (list) => setCustom((prev) => {
+      const next = [...prev, ...list];
+      try {
+        localStorage.setItem(CUSTOM_KEY, JSON.stringify(next));
+      } catch (e) {
+      }
+      return next;
+    });
+    const merged = useMemo(() => {
+      const seen = [];
+      const take = (list) => list.filter((w) => {
+        if (seen.some((e) => sameWord(e, w))) return false;
+        seen.push(w);
+        return true;
+      });
+      const n5 = take(VOCAB_N5), n4 = take(VOCAB_N4);
+      const c5 = take(custom.filter((c) => c.level === "N5")), c4 = take(custom.filter((c) => c.level === "N4"));
+      return { N5: [...n5, ...c5], N4: [...n4, ...c4] };
+    }, [custom]);
     useEffect(() => {
       try {
         const raw = localStorage.getItem(GOAL_KEY);
@@ -7350,13 +7586,13 @@ const VocabApp = /* @__PURE__ */ (function() {
       } catch (e) {
       }
     }, [goal]);
-    const words = level === "N5" ? VOCAB_N5 : VOCAB_N4;
+    const words = level === "N5" ? merged.N5 : merged.N4;
     const srs = level === "N5" ? srsN5 : srsN4;
     if (screen === "study") {
       return /* @__PURE__ */ React.createElement(StudySession, { t, dark, setDark, words, srs, goal, onExit: () => setScreen("home") });
     }
     if (screen === "browse") {
-      return /* @__PURE__ */ React.createElement(BrowseView, { t, dark, setDark, words, srs, onExit: () => setScreen("home") });
+      return /* @__PURE__ */ React.createElement(BrowseView, { t, dark, setDark, words, srs, onExit: () => setScreen("home"), knowledge, setKnowledge, allWords: [...merged.N5, ...merged.N4], level, onAddWords: addCustom });
     }
     return /* @__PURE__ */ React.createElement(
       VocabHome,
@@ -7368,6 +7604,8 @@ const VocabApp = /* @__PURE__ */ (function() {
         setLevel,
         srsN5,
         srsN4,
+        wordsN5: merged.N5,
+        wordsN4: merged.N4,
         goal,
         setGoal,
         onStartStudy: () => setScreen("study"),
