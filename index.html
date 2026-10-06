@@ -8814,10 +8814,253 @@ const VocabApp = /* @__PURE__ */ (function() {
   }
   return VocabApp2;
 })();
+const LessonsApp = /* @__PURE__ */ (function() {
+  const h = React.createElement;
+  const LESSONS = [];
+  LESSONS.push((() => {
+const G=[
+{c:'#E17055',t:'1 \u00B7 \u301C\u3066\u3044\u307E\u3059',s:'Resultant State',st:'V\u3066-form (intransitive verb) + \u3044\u307E\u3059',ex:'Describes the state that remains after a change has happened: the glass broke, so it <i>is</i> broken now. It mostly pairs with intransitive verbs: \u58CA\u308C\u308B, \u5272\u308C\u308B, \u6C5A\u308C\u308B, \u843D\u3061\u308B, \u53D6\u308C\u308B, \u6FE1\u308C\u308B, \u5012\u308C\u308B.',n:'Used to notice something and point it out or warn someone ("The lock is broken!"). Adding \u306E\u3067 leads naturally into a request or caution: \u5272\u308C\u3066\u3044\u308B\u306E\u3067\u3001\u6C17\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044.',e:[['\u304B\u304E\u304C{{\u58CA[\u3053\u308F]\u308C\u3066\u3044\u307E\u3059}}\u3002','The lock is broken.'],['\u58C1[\u304B\u3079]\u304C{{\u6C5A[\u3088\u3054]\u308C\u3066\u3044\u307E\u3059}}\u3002','The wall is dirty.'],['\u7A93[\u307E\u3069]\u30AC\u30E9\u30B9\u304C{{\u5272[\u308F]\u308C\u3066\u3044\u307E\u3059}}\u3088\u3002','The window glass is broken.'],['\u30CF\u30F3\u30AB\u30C1\u304C{{\u843D[\u304A]\u3061\u3066\u3044\u307E\u3059}}\u3088\u3002','Your handkerchief has fallen (is on the floor).']]},
+{c:'#00B894',t:'2 \u00B7 \u301C\u3066\u304A\u304D\u307E\u3059',s:'Preparation / Advance Action',st:'V\u3066-form + \u304A\u304D\u307E\u3059 (+\u307E\u3057\u3087\u3046 / \u304A\u3044\u3066\u304F\u3060\u3055\u3044 / \u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044)',ex:'Do something in advance, for a later purpose, or leave something in a set state so it is ready.',n:'Forms: \u301C\u3066\u304A\u304D\u307E\u3057\u3087\u3046\u304B (offer), \u301C\u3066\u304A\u3044\u3066\u304F\u3060\u3055\u3044 (request), \u301C\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044 (advice). In casual speech: \u301C\u3066\u304A\u304F / \u301C\u3068\u304F.',e:[['\u90F5\u4FBF\u5C40[\u3086\u3046\u3073\u3093\u304D\u3087\u304F]\u306B\u8EE2\u5C45\u5C4A[\u3066\u3093\u304D\u3087\u3068\u3069\u3051]\u3092\u51FA[\u3060]{{\u3057\u3066\u304A\u304D\u307E\u3059}}\u3002','I will submit a change-of-address form to the post office beforehand.'],['\u30A8\u30A2\u30B3\u30F3\u3092{{\u3064\u3051\u3066\u304A\u304D\u307E\u3057\u3087\u3046}}\u304B\u3002','Shall I turn the air conditioner on (ahead of time)?'],['\u3053\u3053\u3067\u8CB7[\u304B]\u3063\u3066{{\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044}}\u3067\u3059\u3002','It is better to buy it here (in advance).'],['\u3053\u3053\u3067\u304A\u624B\u6D17[\u3066\u3042\u3089]\u3044\u306B\u884C[\u3044]\u3063{{\u3066\u304A\u3044\u3066\u304F\u3060\u3055\u3044}}\u3002','Please go to the restroom here beforehand.']]},
+{c:'#F5A623',t:'3 \u00B7 \u301C\u3088\u3046\u306B',s:'In order to / So that',st:'V dictionary form / V\u306A\u3044-form / potential + \u3088\u3046\u306B + main clause',ex:'States the goal or desired state, then the action taken to achieve it. The goal verb is usually not controlled by the speaker (\u308F\u304B\u308B, \u5272\u308C\u306A\u3044, \u3067\u304D\u308B, potential forms).',n:'Compare: \u301C\u305F\u3081\u306B is for goals you control directly (volitional verbs); \u301C\u3088\u3046\u306B is for outcomes you hope will happen or not happen.',e:[['\u5F8C[\u3042\u3068]\u3067\u3059\u3050{{\u308F\u304B\u308B\u3088\u3046\u306B}}\u3001\u4E2D[\u306A\u304B]\u306B\u5165[\u3044]\u308C\u305F\u7269[\u3082\u306E]\u306E\u540D\u524D[\u306A\u307E\u3048]\u3092\u66F8[\u304B]\u3044\u3066\u304A\u304D\u307E\u3059\u3002','I write down what is inside so I can tell right away later.'],['\u670D[\u3075\u304F]\u304C\u6C5A[\u3088\u3054]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u30A8\u30D7\u30ED\u30F3\u3092\u3057\u307E\u3059\u3002','I wear an apron so my clothes don\'t get dirty.'],['\u672C[\u307B\u3093]\u68DA[\u3060\u306A]\u304C\u5012[\u305F\u304A]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u3068\u3081\u308B\u9053\u5177[\u3069\u3046\u3050]\u3067\u3059\u3002','It is a tool to keep the bookshelf from falling.'],['\u5FD8[\u308F\u3059]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u30E1\u30E2\u3057\u3066\u304F\u3060\u3055\u3044\u3002','Please take notes so you don\'t forget.']]},
+{c:'#0984E3',t:'4 \u00B7 \u301C\u307E\u307E',s:'Leaving a state unchanged',st:'V\u305F-form / V\u306A\u3044-form + \u307E\u307E \u30FB Noun + \u306E\u307E\u307E \u30FB \u305D\u306E\u307E\u307E',ex:'While remaining in a certain state, something else happens or is done. The state continues unchanged.',n:'Often describes something unintended, careless or improper (sleeping with contacts in, shoes on indoors). \u305D\u306E\u307E\u307E means "as it is".',e:[['\u4E2D\u8EAB[\u306A\u304B\u307F]\u3092{{\u5165[\u3044]\u308C\u305F\u307E\u307E}}\u904B[\u306F\u3053]\u3076\u3068\u5371[\u3042\u3076]\u306A\u3044\u3067\u3059\u3002','Carrying it with the contents still inside is dangerous.'],['\u30B3\u30F3\u30BF\u30AF\u30C8\u3092{{\u3057\u305F\u307E\u307E}}\u5BDD[\u306D]\u3066\u3057\u307E\u3044\u307E\u3057\u305F\u3002','I fell asleep with my contact lenses in.'],['\u9774[\u304F\u3064]\u3092{{\u306F\u3044\u305F\u307E\u307E}}\u3046\u3061\u306B\u4E0A[\u3042]\u304C\u3063\u3066\u306F\u3044\u3051\u307E\u305B\u3093\u3002','Do not enter the house with your shoes on.'],['{{\u305D\u306E\u307E\u307E}}\u30D5\u30E9\u30A4\u30D1\u30F3\u306B\u5165[\u3044]\u308C\u3066\u304F\u3060\u3055\u3044\u3002','Please put it into the frying pan as it is.']]}];
+const V=[['\u58CA[\u3053\u308F]\u308C\u308B','kowareru','to break, be broken','verb','\u304B\u304E\u304C\u58CA[\u3053\u308F]\u308C\u3066\u3044\u307E\u3059\u3002'],['\u5272[\u308F]\u308C\u308B','wareru','to crack, shatter','verb','\u7A93[\u307E\u3069]\u30AC\u30E9\u30B9\u304C\u5272[\u308F]\u308C\u308B\u3002'],['\u6C5A[\u3088\u3054]\u308C\u308B','yogoreru','to get dirty','verb','\u58C1[\u304B\u3079]\u304C\u6C5A[\u3088\u3054]\u308C\u308B\u3002'],['\u843D[\u304A]\u3061\u308B','ochiru','to fall, drop','verb','\u30CF\u30F3\u30AB\u30C1\u304C\u843D[\u304A]\u3061\u308B\u3002'],['\u53D6[\u3068]\u308C\u308B','toreru','to come off','verb','\u30DC\u30BF\u30F3\u304C\u53D6[\u3068]\u308C\u308B\u3002'],['\u5012[\u305F\u304A]\u308C\u308B','taoreru','to fall over','verb','\u6728[\u304D]\u304C\u5012[\u305F\u304A]\u308C\u308B\u3002'],['\u6545\u969C[\u3053\u3057\u3087\u3046]\u3059\u308B','koshou suru','to break down','verb','\u30B3\u30D4\u30FC\u6A5F[\u304D]\u304C\u6545\u969C[\u3053\u3057\u3087\u3046]\u3059\u308B\u3002'],['\u4E88\u7D04[\u3088\u3084\u304F]\u3059\u308B','yoyaku suru','to reserve','verb','\u4ECA[\u3044\u307E]\u304B\u3089\u4E88\u7D04[\u3088\u3084\u304F]\u3057\u3066\u304A\u304F\u3002'],['\u5305[\u3064\u3064]\u3080','tsutsumu','to wrap','verb','\u65B0\u805E\u7D19[\u3057\u3093\u3076\u3093\u3057]\u3067\u5305[\u3064\u3064]\u3080\u3002'],['\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057','hikkoshi','moving house','noun','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u306E\u524D[\u307E\u3048]\u306B\u3002'],['\u8EE2\u5C45\u5C4A[\u3066\u3093\u304D\u3087\u3068\u3069\u3051]','tenkyo todoke','change-of-address form','noun','\u90F5\u4FBF\u5C40[\u3086\u3046\u3073\u3093\u304D\u3087\u304F]\u306B\u51FA[\u3060]\u3059\u3002'],['\u6BB5[\u3060\u3093]\u30DC\u30FC\u30EB\u7BB1[\u3070\u3053]','danbooru bako','cardboard box','noun','\u6BB5[\u3060\u3093]\u30DC\u30FC\u30EB\u7BB1[\u3070\u3053]\u306B\u66F8[\u304B]\u304F\u3002'],['\u8377\u9020[\u306B\u3065\u304F]\u308A','nizukuri','packing','noun','\u8377\u9020[\u306B\u3065\u304F]\u308A\u3092\u3059\u308B\u3002'],['\u5927\u5BB6[\u304A\u304A\u3084]\u3055\u3093','ooya-san','landlord','noun','\u5927\u5BB6[\u304A\u304A\u3084]\u3055\u3093\u306B\u8A00[\u3044]\u3046\u3002'],['\u624B\u7D9A[\u3066\u3064\u3065]\u304D','tetsuzuki','procedure, paperwork','noun','\u624B\u7D9A[\u3066\u3064\u3065]\u304D\u3092\u3059\u308B\u3002'],['\u4E2D\u8EAB[\u306A\u304B\u307F]','nakami','contents','noun','\u4E2D\u8EAB[\u306A\u304B\u307F]\u3092\u51FA[\u3060]\u3059\u3002'],['\u672C\u68DA[\u307B\u3093\u3060\u306A]','hondana','bookshelf','noun','\u672C\u68DA[\u307B\u3093\u3060\u306A]\u306E\u672C[\u307B\u3093]\u3002'],['\u5730\u9707[\u3058\u3057\u3093]','jishin','earthquake','noun','\u5927[\u304A\u304A]\u304D\u3044\u5730\u9707[\u3058\u3057\u3093]\u3002'],['\u6FE1[\u306C]\u308C\u308B','nureru','to get wet','verb','\u30C6\u30FC\u30D6\u30EB\u304C\u306C\u308C\u3066\u3044\u308B\u3002'],['\u6D17\u6FEF[\u305B\u3093\u305F\u304F]\u3059\u308B','sentaku suru','to do laundry','verb','\u304A\u91D1[\u304B\u306D]\u3092\u5165[\u3044]\u308C\u305F\u307E\u307E\u6D17\u6FEF[\u305B\u3093\u305F\u304F]\u3057\u305F\u3002'],['\u9774[\u304F\u3064]','kutsu','shoes','noun','\u9774[\u304F\u3064]\u3092\u306F\u3044\u305F\u307E\u307E\u3002'],['\u4F11\u61A9[\u304D\u3085\u3046\u3051\u3044]','kyuukei','break, rest','noun','15\u5206[\u3075\u3093]\u4F11\u61A9[\u304D\u3085\u3046\u3051\u3044]\u3057\u307E\u3059\u3002'],['\u4E0D\u52D5\u7523\u5C4B[\u3075\u3069\u3046\u3055\u3093\u3084]','fudousan-ya','real estate agent','noun','\u4E0D\u52D5\u7523\u5C4B[\u3075\u3069\u3046\u3055\u3093\u3084]\u306B\u884C[\u3044]\u304F\u3002'],['\u6E96\u5099[\u3058\u3085\u3093\u3073]','junbi','preparation','noun','\u6E96\u5099[\u3058\u3085\u3093\u3073]\u306F\u3067\u304D\u305F\uFF1F']];
+const S={f:'\u4E0D\u52D5\u7523\u5C4B[\u3075\u3069\u3046\u3055\u3093\u3084]',y:'\u826F\u5B50[\u3088\u3057\u3053]',t:'\u6B66[\u305F\u3051\u3057]',m:'\u826F\u5B50[\u3088\u3057\u3053]\u306E\u6BCD[\u306F\u306F]'};
+const D=[['\u672C\u6587 1 \u00B7 \u304B\u304E\u304C\u58CA\u308C\u3066\u3044\u307E\u3059 (At the Nakano apartment)',[
+['f','\u3053\u3053\u3067\u3059\u3002\u3069\u3046\u305E\u3002\u660E[\u3042\u304B]\u308B\u304F\u3066\u3044\u3044\u90E8[\u3078]\u5C4B[\u3084]\u3067\u3057\u3087\u3046\u3002','Here it is, please. It\'s a bright, nice room, isn\'t it?'],
+['y','\u3048\u3048\u3001\u305D\u3046\u3067\u3059\u306D\u3002\u3067\u3082\u3001\u58C1[\u304B\u3079]\u304C\u5C11[\u3059\u3053]\u3057{{\u6C5A[\u3088\u3054]\u308C\u3066\u3044\u307E\u3059}}\u306D\u3002','Yes, it is. But the wall is a little dirty.'],
+['f','\u3042\u3042\u3001\u3053\u308C\u306F\u3075\u3051\u3070\u304D\u308C\u3044\u306B\u306A\u308B\u3068\u601D[\u304A\u3082]\u3044\u307E\u3059\u3002','Ah, I think this will come clean if you wipe it.'],
+['y','\u3053\u306E\u90E8[\u3078]\u5C4B[\u3084]\u306F\u5357[\u307F\u306A\u307F]\u5411[\u3080]\u304D\u3067\u3059\u304B\u3002','Does this room face south?'],
+['f','\u3048\u3048\u3002\u3061\u3087\u3063\u3068\u7A93[\u307E\u3069]\u3092\u958B[\u3042]\u3051\u3066\u307F\u307E\u3057\u3087\u3046\u3002','Yes. Let\'s try opening the window.'],
+['y','\u3042\u3063\u3001\u304B\u304E\u304C{{\u58CA[\u3053\u308F]\u308C\u3066\u3044\u307E\u3059}}\u306D\u3002','Oh, the lock is broken.'],
+['f','\u3053\u308C\u306F\u3059\u3050\u5927[\u304A\u304A]\u5BB6[\u3084]\u3055\u3093\u306B\u8A00[\u3044]\u3044\u307E\u3059\u3002','I\'ll tell the landlord about this right away.'],
+['f','\u3053\u3061\u3089\u304C\u304A\u98A8[\u3075]\u5442[\u308D]\u3067\u3059\u3002','This is the bathroom.'],
+['y','\u601D[\u304A\u3082]\u3063\u305F\u3088\u308A\u5E83[\u3072\u308D]\u3044\u3067\u3059\u306D\u3002\u305D\u308C\u306B\u3001\u304D\u308C\u3044\u3067\u3059\u306D\u3002','It\'s bigger than I thought. And it\'s clean, too.'],
+['f','\u305D\u3046\u3067\u3057\u3087\u3046\u3002\u3053\u308C\u30678\u4E07[\u307E\u3093]\u5186[\u3048\u3093]\u306F\u5B89[\u3084\u3059]\u3044\u3068\u601D[\u304A\u3082]\u3044\u307E\u3059\u3088\u3002\u3044\u304B\u304C\u3067\u3059\u304B\u3002\u3053\u306E\u90E8[\u3078]\u5C4B[\u3084]\u306F\u304A\u3059\u3059\u3081\u3067\u3059\u3088\u3002','Right? I think \u00A580,000 is cheap for this. What do you think? I recommend this room.'],
+['y','\u3058\u3083\u3001\u3053\u3053\u306B\u6C7A[\u304D]\u3081\u307E\u3059\u3002','Then I\'ll choose this one.'],
+['f','\u308F\u304B\u308A\u307E\u3057\u305F\u3002\u305D\u308C\u3067\u306F\u3001\u624B[\u3066]\u7D9A[\u3064\u3065]\u304D\u3092\u3057\u307E\u3059\u304B\u3089\u3001\u4E8B[\u3058]\u52D9[\u3080]\u6240[\u3057\u3087]\u3078\u623B[\u3082\u3069]\u308A\u307E\u3057\u3087\u3046\u3002','Understood. Then let\'s go back to the office to do the paperwork.']]],
+['\u672C\u6587 2 \u00B7 \u5F15\u3063\u8D8A\u3057\u30C1\u30A7\u30C3\u30AF\u30EA\u30B9\u30C8 (Moving checklist) \u2014 tap to tick',[
+['','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u306E\u524D[\u307E\u3048]\u306B','Before moving'],
+['c','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u306E\u65E5[\u3072]\u3092\u6C7A[\u304D]\u3081\u3066\u3001\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u4F1A[\u304C\u3044]\u793E[\u3057\u3083]\u3092\u9078[\u3048\u3089]\u3073\u307E\u3059\u3002','Decide the moving date and choose a moving company.'],
+['c','\u96FB[\u3067\u3093]\u6C17[\u304D]\u3001\u30AC\u30B9\u3001\u6C34[\u3059\u3044]\u9053[\u3069\u3046]\u306A\u3069\u306E\u55B6[\u3048\u3044]\u696D[\u304E\u3087\u3046]\u6240[\u3057\u3087]\u306B\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u306E\u9023[\u308C\u3093]\u7D61[\u3089\u304F]\u3092\u3057\u307E\u3059\u3002','Notify the electric, gas and water offices.'],
+['c','\u5F79[\u3084\u304F]\u6240[\u3057\u3087]\u306B\u8EE2[\u3066\u3093]\u51FA[\u3057\u3085\u3064]\u5C4A[\u3068\u3069\u3051]\u3092\u51FA[\u3060]\u3057\u307E\u3059\u3002(*)','Submit a moving-out notice at the city office.'],
+['c','\u90F5\u4FBF\u5C40[\u3086\u3046\u3073\u3093\u304D\u3087\u304F]\u306B\u8EE2\u5C45\u5C4A[\u3066\u3093\u304D\u3087\u3068\u3069\u3051]\u3092\u51FA[\u3060]{{\u3057\u3066\u304A\u304D\u307E\u3057\u3087\u3046}}\u3002','Submit a change-of-address form to the post office in advance.'],
+['c','\u5927[\u304A\u304A]\u304D\u3044\u5BB6[\u304B]\u5177[\u3050]\u3084\u96FB[\u3067\u3093]\u6C17[\u304D]\u88FD[\u305B\u3044]\u54C1[\u3072\u3093]\u3092\u6368[\u3059]\u3066\u308B\u6642[\u3068\u304D]\u306F\u3001\u305D\u306E\u5730[\u3061]\u57DF[\u3044\u304D]\u306E\u3054\u307F\u306E\u51FA[\u3060]\u3057\u65B9[\u304B\u305F]\u3092\u8ABF[\u3057\u3089]\u3079\u3066\u3001\u30EB\u30FC\u30EB\u3092\u5B88[\u307E\u3082]\u3063\u3066\u6368[\u3059]\u3066\u307E\u3057\u3087\u3046\u3002','When discarding large furniture or appliances, check the local garbage rules and follow them.'],
+['c','\u65B0[\u3042\u305F\u3089]\u3057\u3044\u90E8[\u3078]\u5C4B[\u3084]\u306E\u5BB6[\u304B]\u5177[\u3050]\u306E\u4F4D[\u3044]\u7F6E[\u3061]\u3092\u6C7A[\u304D]\u3081{{\u3066\u304A\u304D\u307E\u3059}}\u3002','Decide the furniture layout of the new room in advance.'],
+['','\u8377\u9020[\u306B\u3065\u304F]\u308A','Packing'],
+['c','{{\u5F8C[\u3042\u3068]\u3067\u3059\u3050\u308F\u304B\u308B\u3088\u3046\u306B}}\u3001\u4E2D[\u306A\u304B]\u306B\u5165[\u3044]\u308C\u305F\u7269[\u3082\u306E]\u306E\u540D[\u306A]\u524D[\u307E\u3048]\u3092\u6BB5[\u3060\u3093]\u30DC\u30FC\u30EB\u7BB1[\u3070\u3053]\u306B\u66F8[\u304B]\u3044{{\u3066\u304A\u304D\u307E\u3059}}\u3002','Write the contents on the box so you can tell right away later.'],
+['c','\u98DF[\u3057\u3087\u3063]\u5668[\u304D]\u306A\u3069\u306F\u3001{{\u5272[\u308F]\u308C\u306A\u3044\u3088\u3046\u306B}}\u3001\u3072\u3068\u3064\u305A\u3064\u65B0[\u3057\u3093]\u805E[\u3076\u3093]\u7D19[\u3057]\u306A\u3069\u3067\u5305[\u3064\u3064]\u3093{{\u3067\u304A\u304D\u307E\u3059}}\u3002','Wrap dishes one by one in newspaper so they don\'t break.'],
+['c','\u672C[\u307B\u3093]\u306A\u3069\u306E\u91CD[\u304A\u3082]\u3044\u7269[\u3082\u306E]\u306F\u3001\u5C0F[\u3061\u3044]\u3055\u3044\u6BB5[\u3060\u3093]\u30DC\u30FC\u30EB\u7BB1[\u3070\u3053]\u306B\u5165[\u3044]\u308C\u307E\u3057\u3087\u3046\u3002','Put heavy things like books in small boxes.'],
+['c','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u306E\u5F8C[\u3042\u3068]\u3067\u3059\u3050\u4F7F[\u3064\u304B]\u3046\u7269[\u3082\u306E]\u306F\u3001\u3072\u3068\u3064\u306E\u7BB1[\u306F\u3053]\u306B\u5165[\u3044]\u308C{{\u3066\u304A\u304D\u307E\u3057\u3087\u3046}}\u3002','Put things you need right after moving into one box.'],
+['','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u305F\u5F8C[\u3042\u3068]\u3067','After moving'],
+['c','\u5F79[\u3084\u304F]\u6240[\u3057\u3087]\u306B\u8EE2[\u3066\u3093]\u5165[\u306B\u3085\u3046]\u5C4A[\u3068\u3069\u3051]\u3092\u51FA[\u3060]\u3057\u307E\u3059\u3002(*)','Submit a moving-in notice at the city office.'],
+['c','\u904B[\u3046\u3093]\u8EE2[\u3066\u3093]\u514D[\u3081\u3093]\u8A31[\u304D\u3087]\u8A3C[\u3057\u3087\u3046]\u3084\u30AF\u30EC\u30B8\u30C3\u30C8\u30AB\u30FC\u30C9\u306A\u3069\u306E\u4F4F[\u3058\u3085\u3046]\u6240[\u3057\u3087]\u5909[\u3078\u3093]\u66F4[\u3053\u3046]\u3092\u3057\u307E\u3059\u3002','Change your address on your driver\'s licence, credit cards, etc.'],
+['','(*)\u5916[\u304C\u3044]\u56FD[\u3053\u304F]\u4EBA[\u3058\u3093]\u306E\u5834[\u3070]\u5408[\u3042\u3044]\u306F\u3001\u65B0[\u3042\u305F\u3089]\u3057\u3044\u4F4F[\u3058\u3085\u3046]\u6240[\u3057\u3087]\u306E\u5F79[\u3084\u304F]\u6240[\u3057\u3087]\u306B\u5728[\u3056\u3044]\u7559[\u308A\u3085\u3046]\u30AB\u30FC\u30C9\u3092\u6301[\u3082]\u3063\u3066\u884C[\u3044]\u3063\u3066\u3001\u624B[\u3066]\u7D9A[\u3064\u3065]\u304D\u3092\u3057\u307E\u3059\u3002','(*) Foreign residents take their residence card to the city office of the new address and complete the procedure.']]],
+['\u672C\u6587 3 \u00B7 \u4E2D\u8EAB\u3092\u5165\u308C\u305F\u307E\u307E\u904B\u3076\u3068\u5371\u306A\u3044\u3067\u3059 (Moving day)',[
+['t','\u304A\u306F\u3088\u3046\u3054\u3056\u3044\u307E\u3059\u3002','Good morning.'],
+['m','\u6B66[\u305F\u3051\u3057]\u3055\u3093\u3001\u304A\u306F\u3088\u3046\u3054\u3056\u3044\u307E\u3059\u3002\u4ECA\u65E5[\u304D\u3087\u3046]\u306F\u3088\u308D\u3057\u304F\u304A\u9858[\u306D\u304C]\u3044\u3057\u307E\u3059\u3002','Good morning, Takeshi. Thank you for your help today.'],
+['y','\u4ECA\u65E5[\u304D\u3087\u3046]\u306F\u3042\u308A\u304C\u3068\u3046\u3002','Thanks for today.'],
+['t','\u3046\u3046\u3093\u3002\u826F\u5B50[\u3088\u3057\u3053]\u3055\u3093\u3001\u6E96[\u3058\u3085\u3093]\u5099[\u3073]\u306F\u3067\u304D\u305F\uFF1F','No problem. Yoshiko, are you ready?'],
+['y','\u307E\u3060\u5C11[\u3059\u3053]\u3057\u3084\u308B\u3053\u3068\u304C\u3042\u308B\u306E\u3002','There are still a few things to do.'],
+['t','\u5F15[\u3072]\u3063\u8D8A[\u3053]\u3057\u4F1A[\u304C\u3044]\u793E[\u3057\u3083]\u306F\u4F55[\u306A\u3093]\u6642[\u3058]\u3054\u308D\u6765[\u304F]\u308B\u306E\uFF1F','About what time is the moving company coming?'],
+['y','1\u6642[\u3058]\u3088\u3002','At 1 o\'clock.'],
+['t','\u3058\u3083\u3042\u3001\u6025[\u3044\u305D]\u3054\u3046\u3002\u4F55[\u306A\u306B]\u304B\u3089\u59CB[\u306F\u3058]\u3081\u3088\u3046\u304B\u3002','Then let\'s hurry. What shall we start with?'],
+['y','\u672C[\u307B\u3093]\u68DA[\u3060\u306A]\u306E\u672C[\u307B\u3093]\u3092\u7BB1[\u306F\u3053]\u306B\u5165[\u3044]\u308C\u306A\u304F\u3061\u3083\u3044\u3051\u306A\u3044\u306E\u3002\u3042\u3001\u305F\u3093\u3059\u306E\u4E2D[\u306A\u304B]\u8EAB[\u307F]\u3082\u51FA[\u3060]\u3057\u305F\u307B\u3046\u304C\u3044\u3044\u304B\u306A\uFF1F','I have to put the books from the bookshelf into boxes. Oh, should I take the contents out of the chest of drawers too?'],
+['t','\u305D\u3046\u3060\u306D\u3002{{\u4E2D[\u306A\u304B]\u8EAB[\u307F]\u3092\u5165[\u3044]\u308C\u305F\u307E\u307E}}\u904B[\u306F\u3053]\u3076\u3068\u5371[\u3042\u3076]\u306A\u3044\u304B\u3089\u3001\u51FA[\u3060]\u3057\u305F\u307B\u3046\u304C\u3044\u3044\u3068\u601D[\u304A\u3082]\u3046\u3088\u3002','Right. It\'s dangerous to carry it with things still inside, so I think you should take them out.'],
+['y','\u308F\u304B\u3063\u305F\u3002\u3058\u3083\u3001\u79C1[\u308F\u305F\u3057]\u306F\u305D\u308C\u3092\u3059\u308B\u304B\u3089\u3001\u6B66[\u305F\u3051\u3057]\u3055\u3093\u306F\u672C[\u307B\u3093]\u68DA[\u3060\u306A]\u306E\u672C[\u307B\u3093]\u3092\u304A\u9858[\u306D\u304C]\u3044\u3002','OK. Then I\'ll do that, so Takeshi, please take care of the books on the shelf.'],
+['t','\u3046\u3093\u3002\u308F\u304B\u3063\u305F\u3002','Yeah, got it.'],
+['t','\u3053\u308C\u3067\u5168[\u305C\u3093]\u90E8[\u3076]\u7D42[\u304A]\u308F\u3063\u305F\uFF1F','Is that everything finished?'],
+['y','\u3046\u3093\u3002\u672C[\u307B\u3093]\u5F53[\u3068\u3046]\u306B\u3042\u308A\u304C\u3068\u3046\u3002','Yes. Thank you so much.']]]];
+const Q=[
+['\u6587\u578B 1 \u00B7 \u58C1\u304C\u6C5A\u308C\u3066\u3044\u307E\u3059',[
+[['A\uFF1A\u3042\u3063\u3001\u7A93[\u307E\u3069]\u30AC\u30E9\u30B9\u304C{{\u5272[\u308F]\u308C\u3066\u3044\u307E\u3059}}\u3088\u3002','B\uFF1A\u672C[\u307B\u3093]\u5F53[\u3068\u3046]\u3060\u3002\u5371[\u3042\u3076]\u306A\u3044\u3067\u3059\u306D\u3002'],'A: Oh, the window glass is broken! B: So it is. How dangerous.'],
+[['A\uFF1A\u30CF\u30F3\u30AB\u30C1\u304C{{\u843D[\u304A]\u3061\u3066\u3044\u307E\u3059}}\u3088\u3002','B\uFF1A\u3042\u3001\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\u3002'],'A: Your handkerchief is on the floor. B: Oh, thank you.'],
+[['\u826F\u5B50[\u3088\u3057\u3053]\uFF1A\u3042\u3063\u3001\u3053\u3053\u3001\u30DC\u30BF\u30F3\u304C{{\u53D6[\u3068]\u308C\u3066\u308B}}\u3088\u3002','\u4EAC\u5B50[\u304D\u3087\u3046\u3053]\uFF1A\u3048\u3063\u3001\u672C[\u307B\u3093]\u5F53[\u3068\u3046]\uFF1F \u3042\u308A\u304C\u3068\u3046\u3002'],'Yoshiko: Oh, a button has come off here. Kyoko: Really? Thanks.'],
+[['(\u30EC\u30B9\u30C8\u30E9\u30F3\u3067)','\u5BA2[\u304D\u3083\u304F]\uFF1A\u3059\u307F\u307E\u305B\u3093\u3001\u30C6\u30FC\u30D6\u30EB\u304C{{\u306C\u308C\u3066\u3044\u308B}}\u306E\u3067\u3001\u3075\u3044\u3066\u304F\u3060\u3055\u3044\u3002','\u30A6\u30A8\u30FC\u30C8\u30EC\u30B9\uFF1A\u306F\u3044\u3002\u3069\u3046\u3082\u3059\u307F\u307E\u305B\u3093\u3002'],'Customer: Excuse me, the table is wet, so please wipe it. Waitress: Yes, I\'m very sorry.'],
+[['A\uFF1A\u3053\u306E\u30B3\u30D4\u30FC\u6A5F[\u304D]\u3001\u4F7F[\u3064\u304B]\u3063\u3066\u3082\u3044\u3044\u3067\u3059\u304B\u3002','B\uFF1A\u3042\u3001\u3053\u308C\u306F{{\u6545\u969C[\u3053\u3057\u3087\u3046]\u3057\u3066\u3044\u308B}}\u3093\u3067\u3059\u30022\u968E[\u304B\u3044]\u306B\u3082\u3042\u308A\u307E\u3059\u304B\u3089\u3001\u305D\u3061\u3089\u3092\u4F7F[\u3064\u304B]\u3063\u3066\u304F\u3060\u3055\u3044\u3002','A\uFF1A\u308F\u304B\u308A\u307E\u3057\u305F\u3002\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\u3002'],'A: May I use this copier? B: It\'s broken. There is one on the 2nd floor too, so please use that. A: Understood, thank you.']]],
+['\u7DF4\u7FD2 a \u00B7 Look at the picture and say it like the example (\u301C\u3066\u3044\u308B\u306E\u3067\u3001\u6C17\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044)',[
+[['\u4F8B) \u7A93[\u307E\u3069]\u30AC\u30E9\u30B9\u304C\u5272[\u308F]\u308C\u308B'],'{{\u7A93[\u307E\u3069]\u30AC\u30E9\u30B9\u304C\u5272[\u308F]\u308C\u3066\u3044\u308B\u306E\u3067}}\u3001\u6C17[\u304D]\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044\u3002|Because the window glass is broken, please be careful.'],
+[['1. \u5E8A[\u3086\u304B]\u304C\u306C\u308C\u308B'],'\u5E8A[\u3086\u304B]\u304C\u306C\u308C\u3066\u3044\u308B\u306E\u3067\u3001\u6C17[\u304D]\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044\u3002|The floor is wet, so be careful.'],
+[['2. \u30AC\u30E9\u30B9\u304C\u843D[\u304A]\u3061\u308B'],'\u30AC\u30E9\u30B9\u304C\u843D[\u304A]\u3061\u3066\u3044\u308B\u306E\u3067\u3001\u6C17[\u304D]\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044\u3002|Glass is on the floor, so be careful.'],
+[['3. \u6728[\u304D]\u304C\u5012[\u305F\u304A]\u308C\u308B'],'\u6728[\u304D]\u304C\u5012[\u305F\u304A]\u308C\u3066\u3044\u308B\u306E\u3067\u3001\u6C17[\u304D]\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044\u3002|A tree has fallen, so be careful.'],
+[['4. \u5E8A[\u3086\u304B]\u304C\u6C5A[\u3088\u3054]\u308C\u308B'],'\u5E8A[\u3086\u304B]\u304C\u6C5A[\u3088\u3054]\u308C\u3066\u3044\u308B\u306E\u3067\u3001\u6C17[\u304D]\u3092\u3064\u3051\u3066\u304F\u3060\u3055\u3044\u3002|The floor is dirty, so be careful.']]],
+['\u6587\u578B 2 \u00B7 \u90F5\u4FBF\u5C40\u306B\u8EE2\u5C45\u5C4A\u3092\u51FA\u3057\u3066\u304A\u304D\u307E\u3059',[
+[['A\uFF1A\u3069\u3053\u3078\u884C[\u3044]\u304F\u3093\u3067\u3059\u304B\u3002','B\uFF1A\u65C5\u884C[\u308A\u3087\u3053\u3046]\u4F1A[\u304C\u3044]\u793E[\u3057\u3083]\u3067\u3059\u3002\u590F[\u306A\u3064]\u4F11[\u3084\u3059]\u307F\u306B\u65C5\u884C[\u308A\u3087\u3053\u3046]\u306B\u884C[\u3044]\u304F\u306E\u3067\u2026\u3002','A\uFF1A\u65E9[\u306F\u3084]\u3044\u3067\u3059\u306D\u3002','B\uFF1A\u3048\u3048\u30028\u6708[\u304C\u3064]\u306F\u65C5\u884C[\u308A\u3087\u3053\u3046]\u3059\u308B\u4EBA[\u3072\u3068]\u304C\u591A[\u304A\u304A]\u3044\u304B\u3089\u3001\u4ECA[\u3044\u307E]\u304B\u3089\u4E88\u7D04[\u3088\u3084\u304F]\u3057{{\u3066\u304A\u304F}}\u3093\u3067\u3059\u3002'],'A: Where are you going? B: The travel agency; I\'m travelling in summer break... A: That\'s early. B: Yes. Many people travel in August, so I\'m booking from now.'],
+[['\u6B66[\u305F\u3051\u3057]\uFF1A\u98DF\u4E8B[\u3057\u3087\u304F\u3058]\u306F\u3069\u3046\u3057\u3088\u3046\u304B\u3002','\u826F\u5B50[\u3088\u3057\u3053]\uFF1A\u6620\u753B[\u3048\u3044\u304C]\u306F6\u6642[\u3058]\u534A[\u306F\u3093]\u304B\u30898\u6642[\u3058]\u534A[\u306F\u3093]\u307E\u3067\u3060\u304B\u3089\u3001\u5148[\u3055\u304D]\u306B\u8EFD[\u304B\u308B]\u304F\u98DF[\u305F]\u3079{{\u3066\u304A\u304B\u306A\u3044}}\uFF1F','\u6B66[\u305F\u3051\u3057]\uFF1A\u305D\u308C\u304C\u3044\u3044\u306D\u3002'],'Takeshi: What shall we do about dinner? Yoshiko: The movie runs 6:30 to 8:30, so shall we eat a light meal first? Takeshi: Good idea.'],
+[['(\u663C\u4F11[\u3072\u308B\u3084\u3059]\u307F \u4F1A\u793E[\u304B\u3044\u3057\u3083]\u3067)','\u9577\u4E95[\u306A\u304C\u3044]\uFF1A\u5348\u5F8C[\u3054\u3054]\u306E\u4F1A\u8B70[\u304B\u3044\u304E]\u306E\u5834\u6240[\u3070\u3057\u3087]\u306F\u3069\u3053\u3067\u3059\u304B\u3002','\u8AB2\u9577[\u304B\u3061\u3087\u3046]\uFF1A3\u968E[\u304B\u3044]\u306E\u5927\u4F1A\u8B70\u5BA4[\u3060\u3044\u304B\u3044\u304E\u3057\u3064]\u3067\u3059\u3002','\u9577\u4E95[\u306A\u304C\u3044]\uFF1A\u3067\u306F\u3001\u30A8\u30A2\u30B3\u30F3\u3092\u3064\u3051{{\u3066\u304A\u304D\u307E\u3057\u3087\u3046}}\u304B\u3002','\u8AB2\u9577[\u304B\u3061\u3087\u3046]\uFF1A\u304A\u9858[\u306D\u304C]\u3044\u3057\u307E\u3059\u3002'],'Nagai: Where is the afternoon meeting? Section chief: The 3rd-floor large meeting room. Nagai: Then shall I turn on the air conditioner in advance? Chief: Please do.'],
+[['(\u56E3\u4F53\u65C5\u884C[\u3060\u3093\u305F\u3044\u308A\u3087\u3053\u3046]\u306E\u30D0\u30B9\u306E\u4E2D[\u306A\u304B]\u3067)','\u6DFB\u4E57\u54E1[\u3066\u3093\u3058\u3087\u3046\u3044\u3093]\uFF1A\u307F\u306A\u3055\u3093\u3001\u3053\u3053\u306715\u5206[\u3075\u3093]\u4F11\u61A9[\u304D\u3085\u3046\u3051\u3044]\u3057\u307E\u3059\u3002\u3053\u3053\u3092\u51FA\u767A[\u3057\u3085\u3063\u3071\u3064]\u3057\u305F\u5F8C[\u3042\u3068]\u3001\u4E0B\u7530[\u3057\u3082\u3060]\u306B\u7740[\u3064]\u304F\u307E\u3067\u4F11\u61A9[\u304D\u3085\u3046\u3051\u3044]\u306F\u3042\u308A\u307E\u305B\u3093\u306E\u3067\u3001\u3053\u3053\u3067\u304A\u624B\u6D17[\u3066\u3042\u3089]\u3044\u306B\u884C[\u3044]\u3063{{\u3066\u304A\u3044\u3066\u304F\u3060\u3055\u3044}}\u3002'],'Tour guide: We\'ll rest 15 minutes here. After leaving, there is no break until Shimoda, so please use the restroom here beforehand.']]],
+['\u7DF4\u7FD2 b \u00B7 Say it like the example (\u301C\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044\u3067\u3059\u3088)',[
+[['\u4F8B) \u304A\u5F01\u5F53[\u3079\u3093\u3068\u3046]\u3092\u8CB7[\u304B]\u3046\uFF0F\u5411[\u3080]\u3053\u3046\u306B\u306F\u3042\u307E\u308A\u5E97[\u307F\u305B]\u304C\u306A\u3044\uFF0F\u3053\u3053\u3067\u8CB7[\u304B]\u3046'],'A\uFF1A\u304A\u5F01\u5F53[\u3079\u3093\u3068\u3046]\u3092\u8CB7[\u304B]\u3044\u307E\u3057\u305F\u304B\u3002|B\uFF1A\u3044\u3044\u3048\u3001\u307E\u3060\u3067\u3059\u3002|A\uFF1A\u5411[\u3080]\u3053\u3046\u306B\u306F\u3042\u307E\u308A\u5E97[\u307F\u305B]\u304C\u306A\u3044\u304B\u3089\u3001{{\u3053\u3053\u3067\u8CB7[\u304B]\u3063\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044}}\u3067\u3059\u3088\u3002|B\uFF1A\u3058\u3083\u3042\u3001\u305D\u3046\u3057\u307E\u3059\u3002|A: Did you buy a bento? B: Not yet. A: There are few shops over there, so you\'d better buy it here. B: Then I will.'],
+[['1. \u30DB\u30C6\u30EB\u3092\u4E88\u7D04[\u3088\u3084\u304F]\u3059\u308B\uFF0F\u590F[\u306A\u3064]\u4F11[\u3084\u3059]\u307F\u306F\u8FBC[\u3053]\u3080\uFF0F\u65E9[\u306F\u3084]\u304F\u4E88\u7D04[\u3088\u3084\u304F]\u3059\u308B'],'\u30DB\u30C6\u30EB\u3092\u4E88\u7D04[\u3088\u3084\u304F]\u3057\u307E\u3057\u305F\u304B\u3002|\u3044\u3044\u3048\u3001\u307E\u3060\u3067\u3059\u3002|\u590F[\u306A\u3064]\u4F11[\u3084\u3059]\u307F\u306F\u8FBC[\u3053]\u3080\u304B\u3089\u3001\u65E9[\u306F\u3084]\u304F\u4E88\u7D04[\u3088\u3084\u304F]\u3057\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044\u3067\u3059\u3088\u3002|Have you booked the hotel? Not yet. Summer break is crowded, so you should book early.'],
+[['2. \u30B3\u30F3\u30B5\u30FC\u30C8\u306E\u30C1\u30B1\u30C3\u30C8\u3092\u8CB7[\u304B]\u3046\uFF0F\u3053\u306E\u6B4C[\u304B]\u624B[\u3057\u3085]\u306F\u4EBA[\u306B\u3093]\u6C17[\u304D]\u304C\u3042\u308B\uFF0F\u65E9[\u306F\u3084]\u304F\u8CB7[\u304B]\u3046'],'\u30B3\u30F3\u30B5\u30FC\u30C8\u306E\u30C1\u30B1\u30C3\u30C8\u3092\u8CB7[\u304B]\u3044\u307E\u3057\u305F\u304B\u3002|\u3044\u3044\u3048\u3001\u307E\u3060\u3067\u3059\u3002|\u3053\u306E\u6B4C[\u304B]\u624B[\u3057\u3085]\u306F\u4EBA[\u306B\u3093]\u6C17[\u304D]\u304C\u3042\u308B\u304B\u3089\u3001\u65E9[\u306F\u3084]\u304F\u8CB7[\u304B]\u3063\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044\u3067\u3059\u3088\u3002|Have you bought the concert ticket? Not yet. This singer is popular, so buy early.'],
+[['3. \u660E\u65E5[\u3042\u3057\u305F]\u306E\u30CF\u30A4\u30AD\u30F3\u30B0\u306E\u6E96\u5099[\u3058\u3085\u3093\u3073]\u3092\u3059\u308B\uFF0F\u671D[\u3042\u3055]\u65E9[\u306F\u3084]\u304F\u51FA[\u3067]\u308B\uFF0F\u4ECA\u65E5[\u304D\u3087\u3046]\u6E96\u5099[\u3058\u3085\u3093\u3073]\u3092\u3059\u308B'],'\u660E\u65E5[\u3042\u3057\u305F]\u306E\u30CF\u30A4\u30AD\u30F3\u30B0\u306E\u6E96\u5099[\u3058\u3085\u3093\u3073]\u3092\u3057\u307E\u3057\u305F\u304B\u3002|\u3044\u3044\u3048\u3001\u307E\u3060\u3067\u3059\u3002|\u671D[\u3042\u3055]\u65E9[\u306F\u3084]\u304F\u51FA[\u3067]\u308B\u304B\u3089\u3001\u4ECA\u65E5[\u304D\u3087\u3046]\u6E96\u5099[\u3058\u3085\u3093\u3073]\u3092\u3057\u3066\u304A\u3044\u305F\u307B\u3046\u304C\u3044\u3044\u3067\u3059\u3088\u3002|Have you prepared for tomorrow\'s hike? Not yet. You leave early, so prepare today.']]],
+['\u6587\u578B 3 \u00B7 \u5F8C\u3067\u3059\u3050\u308F\u304B\u308B\u3088\u3046\u306B\u3001\u4E2D\u306B\u5165\u308C\u305F\u7269\u306E\u540D\u524D\u3092\u66F8\u3044\u3066\u304A\u304D\u307E\u3059',[
+[['1) \u6599\u7406[\u308A\u3087\u3046\u308A]\u3092\u3059\u308B\u6642[\u3068\u304D]\u306F\u3001\u670D[\u3075\u304F]\u304C\u6C5A[\u3088\u3054]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u30A8\u30D7\u30ED\u30F3\u3092\u3057\u307E\u3059\u3002'],'When cooking, I wear an apron so my clothes don\'t get dirty.'],
+[['2) (\u6559\u5BA4[\u304D\u3087\u3046\u3057\u3064]\u3067)','\u5148\u751F[\u305B\u3093\u305B\u3044]\uFF1A\u660E\u65E5[\u3042\u3057\u305F]\u6301[\u3082]\u3063\u3066\u6765[\u304F]\u308B\u7269[\u3082\u306E]\u3092\u8A00[\u3044]\u3044\u307E\u3059\u304B\u3089\u3001\u5FD8[\u308F\u3059]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u30E1\u30E2\u3057\u3066\u304F\u3060\u3055\u3044\u3002'],'Teacher: I\'ll say what to bring tomorrow, so take notes so you don\'t forget.'],
+[['3) \u79C1[\u308F\u305F\u3057]\u306F\u3044\u3064\u3082\u671D[\u3042\u3055]\u3059\u3050\u5B66\u6821[\u304C\u3063\u3053\u3046]\u3078\u884C[\u3044]\u3051\u308B{{\u3088\u3046\u306B}}\u3001\u524D[\u307E\u3048]\u306E\u65E5[\u3072]\u306B\u6388\u696D[\u3058\u3085\u304E\u3087\u3046]\u306E\u6E96\u5099[\u3058\u3085\u3093\u3073]\u3092\u3057\u3066\u304A\u304D\u307E\u3059\u3002'],'I always prepare for class the day before so I can go to school right away in the morning.'],
+[['4) \u660E\u65E5[\u3042\u3057\u305F]\u306F\u3001\u671D[\u3042\u3055]7\u6642[\u3058]\u306E\u65B0\u5E79\u7DDA[\u3057\u3093\u304B\u3093\u305B\u3093]\u306B\u4E57[\u306E]\u308B\u304B\u3089\u3001\u9593[\u307E]\u306B\u5408[\u3042]\u3046{{\u3088\u3046\u306B}}\u65E9[\u306F\u3084]\u3081\u306B\u5BB6[\u3044\u3048]\u3092\u51FA[\u3067]\u308B\u3064\u3082\u308A\u3067\u3059\u3002'],'Tomorrow I\'m taking the 7 a.m. Shinkansen, so I plan to leave home early to be on time.'],
+[['5) \u30E9\u30D5\u30EB\uFF1A\u4F55[\u306A\u306B]\u3092\u8CB7[\u304B]\u3063\u305F\u3093\u3067\u3059\u304B\u3002','\u30C1\u30F3\uFF1A\u672C[\u307B\u3093]\u68DA[\u3060\u306A]\u304C\u5012[\u305F\u304A]\u308C{{\u306A\u3044\u3088\u3046\u306B}}\u3068\u3081\u308B\u9053[\u3069\u3046]\u5177[\u3050]\u3067\u3059\u3002\u5927[\u304A\u304A]\u304D\u3044\u5730\u9707[\u3058\u3057\u3093]\u304C\u6765[\u304D]\u3066\u3082\u5B89\u5FC3[\u3042\u3093\u3057\u3093]\u3067\u3059\u3088\u3002','\u30E9\u30D5\u30EB\uFF1A\u3078\u3048\u3001\u3044\u3044\u7269[\u3082\u306E]\u304C\u3042\u308B\u3093\u3067\u3059\u306D\u3002'],'Rahul: What did you buy? Chin: A tool that keeps the bookshelf from falling. You\'re safe even if a big earthquake comes. Rahul: Oh, there\'s a good thing like that!'],
+[['\u53CB\u9054[\u3068\u3082\u3060\u3061]\u3068\u8A71[\u306F\u306A]\u305D\u3046','\u30FB\u65C5\u884C[\u308A\u3087\u3053\u3046]\u306E\u524D[\u307E\u3048]\u306B\u4F55[\u306A\u306B]\u3092\u3057\u3066\u304A\u304D\u307E\u3059\u304B\u3002','\u30FB\u5730\u9707[\u3058\u3057\u3093]\u306E\u6642[\u3068\u304D]\u56F0[\u3053\u307E]\u3089\u306A\u3044\u3088\u3046\u306B\u3001\u4F55[\u306A\u306B]\u3092\u3057\u3066\u304A\u304D\u307E\u3059\u304B\u3002'],'Talk with friends: What do you do before a trip? What do you do in advance so you won\'t be in trouble in an earthquake?']]],
+['\u6587\u578B 4 \u00B7 \u4E2D\u8EAB\u3092\u5165\u308C\u305F\u307E\u307E\u904B\u3076\u3068\u5371\u306A\u3044\u3067\u3059',[
+[['1) A\uFF1A\u76EE[\u3081]\u304C\u8D64[\u3042\u304B]\u3044\u3067\u3059\u306D\u3002','B\uFF1A\u6628\u65E5[\u304D\u306E\u3046]\u3001\u30B3\u30F3\u30BF\u30AF\u30C8\u30EC\u30F3\u30BA\u3092{{\u3057\u305F\u307E\u307E}}\u5BDD[\u306D]\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059\u3002'],'A: Your eyes are red. B: I fell asleep yesterday with my contact lenses in.'],
+[['2) A\uFF1A\u3069\u3046\u3057\u305F\u306E\uFF1F','B\uFF1A\u30BA\u30DC\u30F3\u306E\u30DD\u30B1\u30C3\u30C8\u306B\u304A\u91D1[\u304B\u306D]\u3092{{\u5165[\u3044]\u308C\u305F\u307E\u307E}}\u6D17\u6FEF[\u305B\u3093\u305F\u304F]\u3057\u3061\u3083\u3063\u305F\u3093\u3060\u3002'],'A: What happened? B: I washed my trousers with money still in the pocket.'],
+[['3) \u65E5\u672C[\u306B\u307B\u3093]\u3067\u306F\u3001\u9774[\u304F\u3064]\u3092{{\u306F\u3044\u305F\u307E\u307E}}\u3046\u3061\u306B\u4E0A[\u3042]\u304C\u3063\u3066\u306F\u3044\u3051\u307E\u305B\u3093\u3002'],'In Japan, you must not enter a house with your shoes on.'],
+[['\u203B (\u6599\u7406[\u308A\u3087\u3046\u308A]\u6559[\u304D\u3087\u3046]\u5BA4[\u3057\u3064]\u3067)','\u30EF\u30F3\uFF1A\u3053\u306E\u8089[\u306B\u304F]\u306F\u5207[\u304D]\u308A\u307E\u3059\u304B\u3002','\u5148\u751F[\u305B\u3093\u305B\u3044]\uFF1A\u3044\u3044\u3048\u3002{{\u305D\u306E\u307E\u307E}}\u30D5\u30E9\u30A4\u30D1\u30F3\u306B\u5165[\u3044]\u308C\u3066\u304F\u3060\u3055\u3044\u3002'],'Wang: Do I cut this meat? Teacher: No. Put it in the frying pan as it is.']]],
+['\u7DF4\u7FD2 c \u00B7 Say it like the example (\u301C\u305F\u307E\u307E\u301C\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059)',[
+[['\u4F8B) \u30B3\u30F3\u30BF\u30AF\u30C8\u3092\u3059\u308B\uFF0F\u5BDD[\u306D]\u308B'],'\u30B3\u30F3\u30BF\u30AF\u30C8\u3092\u3057\u305F\u307E\u307E\u5BDD[\u306D]\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059\u3002|I fell asleep with my contacts in.'],
+[['1. \u30A8\u30A2\u30B3\u30F3\u3092\u3064\u3051\u308B\uFF0F\u5BDD[\u306D]\u308B'],'\u30A8\u30A2\u30B3\u30F3\u3092\u3064\u3051\u305F\u307E\u307E\u5BDD[\u306D]\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059\u3002|I fell asleep with the air conditioner on.'],
+[['2. \u7A93[\u307E\u3069]\u3092\u958B[\u3042]\u3051\u308B\uFF0F\u6765[\u304F]\u308B'],'\u7A93[\u307E\u3069]\u3092\u958B[\u3042]\u3051\u305F\u307E\u307E\u6765[\u304D]\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059\u3002|I came out leaving the window open.'],
+[['3. \u96FB\u6C17[\u3067\u3093\u304D]\u3092\u3064\u3051\u308B\uFF0F\u6765[\u304F]\u308B'],'\u96FB\u6C17[\u3067\u3093\u304D]\u3092\u3064\u3051\u305F\u307E\u307E\u6765[\u304D]\u3066\u3057\u307E\u3063\u305F\u3093\u3067\u3059\u3002|I came out leaving the light on.']]]];
+    return { id: 26, num: "\u7B2C26\u8AB2", title: "\u5F15\u3063\u8D8A\u3057", sub: "Lesson 26 \u00B7 Moving", G, V, S, D, Q };
+  })());
+
+  const fur = (s) => s.replace(/\{\{(.+?)\}\}/g, "<mark>$1</mark>").replace(/([\u4E00-\u9FA5\u3005]+)\[([^\]]+)\]/g, "<ruby>$1<rt>$2</rt></ruby>");
+  const theme = (dark) => ({
+    bg: dark ? "#17181C" : "#EEEFE7",
+    ink: dark ? "#EDEAE0" : "#20232B",
+    inkSoft: dark ? "#A8A79C" : "#5B5D52",
+    card: dark ? "#1F2126" : "#FBFAF5",
+    border: dark ? "#2C2E34" : "#DAD9CC",
+    seal: "#B23A2E"
+  });
+  const LV = [
+    { v: 1, label: "Not known", color: "#D2453A" },
+    { v: 2, label: "Somewhat", color: "#E0A21F" },
+    { v: 3, label: "Known", color: "#3E9A5B" }
+  ];
+  function usePersist(key, init) {
+    const [val, setVal] = useState(() => {
+      try {
+        const r = localStorage.getItem(key);
+        return r ? JSON.parse(r) : init;
+      } catch (e) {
+        return init;
+      }
+    });
+    const set = (fn) => setVal((prev) => {
+      const next = typeof fn === "function" ? fn(prev) : fn;
+      try {
+        localStorage.setItem(key, JSON.stringify(next));
+      } catch (e) {
+      }
+      return next;
+    });
+    return [val, set];
+  }
+  const CSS = `
+.lsn ruby rt{font-size:.5em;color:var(--mut)}
+.lsn.nofur rt{display:none}
+.lsn .jp{font-size:21px;line-height:2.3}
+.lsn.nofur .jp{line-height:1.6}
+.lsn .en{display:none;color:var(--mut);font-size:14px;margin-top:2px}
+.lsn.show-en .en{display:block}
+.lsn mark{background:none;color:inherit}
+.lsn.hl mark{background:#FDCB6E;color:#222;border-radius:4px;padding:0 2px}
+.lsn summary{cursor:pointer;font-weight:700;font-size:17px;padding:10px 0}
+.lsn .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--a);text-transform:uppercase;margin-top:10px}
+.lsn .ex{border-top:1px dashed var(--line);padding:4px 0}
+.lsn .line{background:var(--card);border-radius:12px;padding:10px 14px;margin:8px 0;border:1px solid var(--line)}
+.lsn .spk{display:inline-block;font-size:12px;background:var(--p);color:#fff;border-radius:10px;padding:0 10px;line-height:1.9}
+.lsn .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:8px 14px;font-size:14px;cursor:pointer;white-space:nowrap;font-family:inherit}
+.lsn .chip.on{background:var(--p);color:#fff;border-color:var(--p)}
+.lsn input[type=search]{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);font-size:15px;margin:6px 0;box-sizing:border-box;font-family:inherit}
+.lsn h2.sub{font-size:15px;margin:18px 0 4px}
+.lsn label.ck{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.lsn label.ck input{margin-top:14px;width:20px;height:20px}
+`;
+  function H({ s, cls, style, tag }) {
+    return h(tag || "div", { className: cls, style, dangerouslySetInnerHTML: { __html: s } });
+  }
+  const JP = ({ s, style }) => h(H, { s: fur(s), cls: "jp", style });
+  const EN = ({ s, style }) => h(H, { s, cls: "en", style });
+  function Dots({ level, onSet }) {
+    return h("div", { style: { display: "flex", gap: 8 } }, LV.map((L) => h("button", {
+      key: L.v,
+      title: L.label,
+      "aria-label": L.label,
+      "aria-pressed": level === L.v,
+      onClick: () => onSet(L.v),
+      style: { width: 22, height: 22, borderRadius: 999, border: `2px solid ${L.color}`, background: level === L.v ? L.color : "transparent", cursor: "pointer", padding: 0 }
+    })));
+  }
+  function Chip({ on, onClick, children, color }) {
+    return h("button", { className: "chip" + (on ? " on" : ""), onClick, style: on && color ? { background: color, borderColor: color } : null }, children);
+  }
+  function LessonView({ lesson, t, tools }) {
+    const [tab, setTab] = useState("g");
+    const [q, setQ] = useState("");
+    const [pos, setPos] = useState("all");
+    const [lvF, setLvF] = useState("all");
+    const [marks, setMarks] = usePersist("lesson-vocab-levels-v1", {});
+    const [checks, setChecks] = usePersist("lesson-checks-v1", {});
+    const [shown, setShown] = useState({});
+    const { G, V, D, Q, S } = lesson;
+    const tabs = [["g", "\uD83D\uDCD8 Grammar"], ["v", "\uD83D\uDDC2 Vocabulary"], ["d", "\uD83D\uDCAC Dialogues"], ["p", "\u270F\uFE0F Patterns & Drills"]];
+    const poss = ["all", ...Array.from(new Set(V.map((v) => v[3])))];
+    const setMark = (k, v) => setMarks((m) => {
+      const n = { ...m };
+      if (n[k] === v) delete n[k];
+      else n[k] = v;
+      return n;
+    });
+    const mk = (i) => `${lesson.id}:${i}`;
+    const words = V.map((v, i) => ({ v, i })).filter(({ v, i }) => (pos === "all" || v[3] === pos) && (lvF === "all" || (lvF === 0 ? !marks[mk(i)] : marks[mk(i)] === lvF)) && (v[0] + v[1] + v[2]).toLowerCase().includes(q.toLowerCase()));
+    const counts = { 0: 0, 1: 0, 2: 0, 3: 0 };
+    V.forEach((v, i) => { counts[marks[mk(i)] || 0]++; });
+    const toolbar = h("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", margin: "6px 0 12px" } }, [["fur", "Furigana"], ["en", "English"], ["hl", "Highlight grammar"]].map(([k, lab]) => h(Chip, { key: k, on: tools[k], onClick: () => tools.toggle(k) }, lab)));
+    const card = { background: t.card, border: `1px solid ${t.border}`, borderRadius: 12, padding: "12px 14px", margin: "8px 0" };
+    const sec = (title, open, body, key) => h("details", { key, open: open ? true : void 0, style: { "--a": t.seal, background: `color-mix(in srgb, ${t.seal} 8%, ${t.card})`, border: `1px solid ${t.border}`, borderLeft: `6px solid ${t.seal}`, borderRadius: 12, margin: "10px 0", padding: "4px 14px" } }, h("summary", null, title), body);
+    let pane = null;
+    if (tab === "g") {
+      pane = G.map((g, i) => h("details", { key: i, open: i === 0 ? true : void 0, style: { "--a": g.c, background: `color-mix(in srgb, ${g.c} 13%, ${t.card})`, border: `1px solid ${g.c}`, borderLeft: `6px solid ${g.c}`, borderRadius: 12, margin: "10px 0", padding: "4px 14px" } }, h("summary", null, g.t + " ", h("small", { style: { fontWeight: 400, color: "var(--mut)" } }, g.s)), h("div", { className: "lbl" }, "Structure"), h(H, { s: g.st }), h("div", { className: "lbl" }, "Explanation"), h(H, { s: g.ex }), h("div", { className: "lbl" }, "Nuance"), h(H, { s: g.n }), h("div", { className: "lbl" }, "Examples"), g.e.map((x, j) => h("div", { className: "ex", key: j }, h(JP, { s: x[0] }), h(EN, { s: x[1] })))));
+    } else if (tab === "v") {
+      pane = h("div", null, h("input", { type: "search", value: q, onChange: (e) => setQ(e.target.value), placeholder: "Search word, romaji or English\u2026" }), h("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", margin: "6px 0" } }, poss.map((p) => h(Chip, { key: p, on: pos === p, onClick: () => setPos(p) }, p))), h("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", margin: "6px 0 12px" } }, [["all", "All levels", V.length, t.ink], [1, "Not known", counts[1], LV[0].color], [2, "Somewhat", counts[2], LV[1].color], [3, "Known", counts[3], LV[2].color], [0, "Unmarked", counts[0], t.inkSoft]].map(([k, lab, n, c]) => h(Chip, { key: String(k), on: lvF === k, color: c, onClick: () => setLvF(k) }, `${lab} ${n}`))), words.length ? words.map(({ v, i }) => {
+        const lv = marks[mk(i)] || 0;
+        const c = lv ? LV[lv - 1].color : null;
+        return h("div", { key: i, style: { ...card, background: c ? `linear-gradient(${c}26, ${c}26), ${t.card}` : t.card, borderLeft: c ? `6px solid ${c}` : card.border, borderColor: c || t.border } }, h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 } }, h(JP, { s: v[0], style: { fontSize: 24, lineHeight: 2.1 } }), h(Dots, { level: lv, onSet: (x) => setMark(mk(i), x) })), h("div", null, h("b", null, v[2]), " ", h("span", { style: { fontSize: 11, background: t.border, borderRadius: 8, padding: "1px 8px", color: t.inkSoft } }, v[3])), h("div", { style: { color: t.inkSoft, fontSize: 14 } }, v[1]), h(JP, { s: v[4], style: { fontSize: 16, lineHeight: 2 } }));
+      }) : h("p", null, "No matches."));
+    } else if (tab === "d") {
+      pane = h("div", null, toolbar, D.map((d, di) => sec(d[0], di === 0, d[1].map((l, li) => {
+        if (l[0] === "") return h("h2", { key: li, className: "sub" }, h(H, { s: fur(l[1]), tag: "span" }), " ", h("span", { className: "en", style: { display: "inline" } }, "\u00B7 " + l[2]));
+        const k = `${lesson.id}:${di}:${li}`;
+        const body = h("div", null, h(JP, { s: l[1] }), h(EN, { s: l[2] }));
+        return h("div", { className: "line", key: li, style: checks[k] ? { opacity: 0.6 } : null }, l[0] === "c" ? h("label", { className: "ck" }, h("input", { type: "checkbox", checked: !!checks[k], onChange: () => setChecks((c) => ({ ...c, [k]: !c[k] })) }), body) : h("div", null, h(H, { s: fur(S[l[0]]), cls: "spk", tag: "span" }), body));
+      }), di)));
+    } else {
+      pane = h("div", null, toolbar, Q.map((g, gi) => sec(g[0], gi === 0, g[1].map((it, ii) => {
+        const a = it[1].includes("|") && it[1].includes("{{") || it[1].split("|").length > 1 && /^[^A-Za-z]/.test(it[1]);
+        const J = it[0].map((x, xi) => h(JP, { s: x, key: xi }));
+        if (!a) return h("div", { className: "line", key: ii }, J, h(EN, { s: it[1] }));
+        const p = it[1].split("|");
+        const en = p.pop();
+        const k = `${gi}-${ii}`;
+        return h("div", { className: "line", key: ii }, J, shown[k] ? h("div", null, p.map((x, xi) => h(JP, { s: x, key: xi })), h(EN, { s: en })) : h("button", { className: "chip", onClick: () => setShown((s) => ({ ...s, [k]: true })) }, "Show model answer"));
+      }), gi)));
+    }
+    return h("div", null, h("div", { style: { display: "flex", gap: 6, padding: "10px 0", position: "sticky", top: 0, background: t.bg, zIndex: 5, overflowX: "auto" } }, tabs.map(([k, lab]) => h(Chip, { key: k, on: tab === k, onClick: () => setTab(k) }, lab))), pane);
+  }
+  function LessonsApp({ onExitToRoot }) {
+    const [dark, setDark] = useState(false);
+    const [lid, setLid] = useState(null);
+    const [fOn, setFOn] = useState(true);
+    const [eOn, setEOn] = useState(true);
+    const [hOn, setHOn] = useState(true);
+    const t = theme(dark);
+    const lesson = LESSONS.find((l) => l.id === lid);
+    const tools = { fur: fOn, en: eOn, hl: hOn, toggle: (k) => (k === "fur" ? setFOn : k === "en" ? setEOn : setHOn)((v) => !v) };
+    const icon = (onClick, children, title) => h("button", { onClick, title, style: { width: 38, height: 38, borderRadius: 10, border: `1px solid ${t.border}`, background: t.card, color: t.ink, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" } }, children);
+    const cls = "lsn" + (fOn ? "" : " nofur") + (eOn ? " show-en" : "") + (hOn ? " hl" : "");
+    return h("div", { className: cls, style: { minHeight: "100vh", background: t.bg, color: t.ink, fontFamily: "'Zen Kaku Gothic New','Noto Sans JP',sans-serif", "--mut": t.inkSoft, "--card": t.card, "--line": t.border, "--p": t.seal, "--ink": t.ink, paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)" } }, h("style", null, CSS), h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", gap: 12, maxWidth: 760, margin: "0 auto" } }, h("div", { style: { display: "flex", alignItems: "center", gap: 10, minWidth: 0 } }, icon(lesson ? () => setLid(null) : onExitToRoot, h(ArrowLeft, { size: 18 }), "Back"), h("div", { style: { minWidth: 0 } }, h("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 20 } }, lesson ? `${lesson.num} \u00B7 ${lesson.title}` : "\u8AB2 Lessons"), lesson && h("div", { style: { color: t.inkSoft, fontSize: 13 } }, lesson.sub))), icon(() => setDark((d) => !d), dark ? h(Sun, { size: 18 }) : h(Moon, { size: 18 }), "Toggle theme")), h("div", { style: { maxWidth: 760, margin: "0 auto", padding: "0 16px 50px" } }, lesson ? h(LessonView, { lesson, t, tools, key: lesson.id }) : h("div", null, h("div", { style: { color: t.inkSoft, marginBottom: 14 } }, "Textbook lessons \u00B7 grammar, vocabulary, dialogues & drills"), LESSONS.map((l) => h("button", { key: l.id, onClick: () => setLid(l.id), style: { display: "block", width: "100%", textAlign: "left", background: t.card, border: `1px solid ${t.border}`, borderRadius: 16, padding: "16px 18px", marginBottom: 12, color: t.ink, cursor: "pointer", fontFamily: "inherit" } }, h("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 20 } }, `${l.num} \u00B7 ${l.title}`), h("div", { style: { color: t.inkSoft, fontSize: 13, margin: "2px 0 8px" } }, l.sub), h("div", { style: { fontSize: 12, color: t.inkSoft } }, `${l.G.length} grammar points \u00B7 ${l.V.length} words \u00B7 ${l.D.length} dialogues \u00B7 ${l.Q.length} drills`))), h("div", { style: { border: `1px dashed ${t.border}`, borderRadius: 16, padding: "16px 18px", color: t.inkSoft, fontSize: 13 } }, "More lessons will appear here as they are added."))));
+  }
+  return LessonsApp;
+})();
+
 function App() {
   const [section, setSection] = useState("home");
   if (section === "kanji") {
     return /* @__PURE__ */ React.createElement("div", { style: { position: "relative" } }, /* @__PURE__ */ React.createElement(FloatingHomeButton, { onClick: () => setSection("home") }), /* @__PURE__ */ React.createElement(KanjiApp, null));
+  }
+  if (section === "lessons") {
+    return /* @__PURE__ */ React.createElement(LessonsApp, { onExitToRoot: () => setSection("home") });
   }
   if (section === "vocab") {
     return /* @__PURE__ */ React.createElement(VocabApp, { onExitToRoot: () => setSection("home") });
@@ -8876,7 +9119,7 @@ function Home({ onSelect }) {
     ),
     /* @__PURE__ */ React.createElement("div", { style: { fontFamily: "'Shippori Mincho', serif", fontWeight: 800, fontSize: 34, marginBottom: 6 } }, "\u65E5\u672C\u8A9E"),
     /* @__PURE__ */ React.createElement("div", { style: { color: "#5B5D52", marginBottom: 40 } }, "Choose what to study"),
-    /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", maxWidth: 640 } }, /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", maxWidth: 860 } }, /* @__PURE__ */ React.createElement(
       HomeCard,
       {
         title: "Kanji",
@@ -8891,6 +9134,14 @@ function Home({ onSelect }) {
         subtitle: "JLPT N5 + N4 words \xB7 flashcards & spaced repetition",
         emoji: "\u8A9E",
         onClick: () => onSelect("vocab")
+      }
+    ), /* @__PURE__ */ React.createElement(
+      HomeCard,
+      {
+        title: "Lessons",
+        subtitle: "Textbook lessons \xB7 grammar, vocabulary, dialogues & drills",
+        emoji: "\u8AB2",
+        onClick: () => onSelect("lessons")
       }
     ))
   );
