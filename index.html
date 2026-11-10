@@ -15,8 +15,10 @@
   #root { min-height: 100vh; }
   :root { --w-wide: 960px; --w-mid: 520px; --w-lesson: 760px; }
   @media (min-width: 700px)  { :root { --w-wide: 980px;  --w-mid: 600px; --w-lesson: 860px; } }
-  @media (min-width: 1100px) { :root { --w-wide: 1240px; --w-mid: 680px; --w-lesson: 1040px; } }
-  @media (min-width: 1700px) { :root { --w-wide: 1440px; --w-mid: 760px; --w-lesson: 1180px; } }
+  /* Laptop: scale everything up (fonts, buttons, spacing) so text is comfortable to read */
+  @media (min-width: 1000px) { #root { zoom: 1.2; }  :root { --w-wide: 1040px; --w-mid: 570px; --w-lesson: 880px; } }
+  @media (min-width: 1400px) { #root { zoom: 1.35; } :root { --w-wide: 1080px; --w-mid: 560px; --w-lesson: 900px; } }
+  @media (min-width: 1900px) { #root { zoom: 1.6; }  :root { --w-wide: 1100px; --w-mid: 560px; --w-lesson: 900px; } }
   img, video, canvas, svg { max-width: 100%; }
 </style>
 </head>
